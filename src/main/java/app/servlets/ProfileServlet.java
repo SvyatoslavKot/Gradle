@@ -22,9 +22,14 @@ import java.io.IOException;
 @WebServlet("/profileview")
 public class ProfileServlet extends HttpServlet {
     Client client = new Client();
-    /**
-     *метод doGet отправляет страницу rrofileview.jsp
-     * */
+
+     /**
+     * обрабатывает GET запросы со страницы '/profileview'
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();

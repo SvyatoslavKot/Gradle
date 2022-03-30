@@ -20,30 +20,35 @@ import java.net.URLConnection;
 
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
-    /**
-     * константа сообщения в форме заполнения
-     * */
     final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
     Client client = new Client();
+
     /**
      * метод обрабатывает GET запросы
-     * */
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /**
-         * отправляет в request страницу main.jsp
-         * */
+        // отправляет в запрос на страницу main.jsp
+
         Bank bank = Bank.getInstance();
+        // отправил атрибут на страницу с именем банк
         req.setAttribute("bank", bank);
+
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/main.jsp");
         requestDispatcher.forward(req, resp);
     }
+
     /**
      * метод обрабатывает POST запросы
+     * @param req
+     * @param resp
      * @throws ServletException
      * @throws IOException
-     *
-     * */
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //получает значение с параметром "name"
