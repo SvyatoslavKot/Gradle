@@ -1,6 +1,5 @@
 package app.bankApp;
 
-
 /**
  * @author SvyatoslavK
  * класс банка

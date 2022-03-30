@@ -13,10 +13,6 @@
         <url-pattern>/test</url-pattern>
     </servlet-mapping>
 
-
-
-
-
     <error-page>
         <error-code>404</error-code>
         <location>/views/error/error404.jsp</location>
