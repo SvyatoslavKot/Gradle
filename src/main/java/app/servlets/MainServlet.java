@@ -1,6 +1,7 @@
 package app.servlets;
 
 import app.bankApp.Bank;
+import app.bankApp.DBtextformat.ReadClient;
 import app.entities.Client;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -9,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URLConnection;
@@ -22,7 +24,8 @@ import java.net.URLConnection;
 public class MainServlet extends HttpServlet {
     final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
     Client client = new Client();
-
+    ReadClient readClient = ReadClient.getInstance();
+    Bank bank = Bank.getInstance();
     /**
      * метод обрабатывает GET запросы
      * @param req
@@ -32,14 +35,19 @@ public class MainServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // отправляет в запрос на страницу main.jsp
+        readClient.readBD(bank);
+        System.out.println(bank.getBankCollection().getClientHashMap().entrySet());
+        ServletContext servletContext = getServletContext();
+        Client client = (Client) servletContext.getAttribute("client");
+        System.out.println(client);
 
-        Bank bank = Bank.getInstance();
-        // отправил атрибут на страницу с именем банк
-        req.setAttribute("bank", bank);
-
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/main.jsp");
+        req.setAttribute("client" , client);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/main.jsp");
         requestDispatcher.forward(req, resp);
+
+       // if (req.getParameter("profileButton")!=null){
+         //   resp.sendRedirect("/profileview");
+       // }
     }
 
     /**
@@ -51,27 +59,7 @@ public class MainServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //получает значение с параметром "name"
-        String name = req.getParameter("name");
-        //получает значение с параметром "pass"
-        String password = req.getParameter("pass");
-//цикл который получает параметр кнопок из request
-        if (req.getParameter("register")!= null){
-            // отправляет клиента на страницу /register
-            resp.sendRedirect("/register" );
-        }else if (req.getParameter("enter")!= null){
-            if (name.isEmpty() || password.isEmpty()){
-                //устанавливает значение атрибута с именем "text", если поля в форме пустые
-                req.setAttribute("text", TEXT);
-                //выполняет метод doGet для перезапуска страницы
-                doGet(req,resp);
-            }else
-                //отправляет клиента на страницу "/profileview" , если поля заполнены
-                client.setPassword(password);
-            client.setUserName(name);
-            ServletContext servletContext = getServletContext();
-            servletContext.setAttribute("client" , client);
-            resp.sendRedirect("/profileview");
+
         }
-    }
+
 }

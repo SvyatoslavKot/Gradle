@@ -9,6 +9,7 @@
     <title>Профиль</title>
 </head>
 <body>
+<jsp:include page="/views/include/header.jsp"/>
 
 <div>
     <h3>окно профиля</h3>
@@ -20,6 +21,6 @@
     </div>
 </div>
 
-
+<jsp:include page="/views/include/footer.jsp"/>
 </body>
 </html>

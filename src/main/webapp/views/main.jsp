@@ -2,53 +2,27 @@
   Created by IntelliJ IDEA.
   User: Svyat
 --%>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
     <title>Главноая</title>
 </head>
+
+<jsp:include page="/views/include/header.jsp"/>
+
 <body>
 <div>
-    <%--
-   встроенныё javaCod показывает последнего добавленного юзера
---%>
-<jsp:useBean id="client" class="app.entities.Client" scope="session"/>
-    ${bank.name}
-
-    <p> </p>
     <div>
+        <h3>Главная страница</h3>
         <div>
-            <h2>Login</h2>
-        </div>
-        <%--
-       JavaCod
-       --%>
-        <%
-            if (request.getAttribute("text")!= null) {
-                out.println("<p> "+request.getAttribute("text")+"</p>");
-            }else out.println("<p> Здравствуйте заполните форму </p>");
-        %>
-        <%--
-       форма входа
-       метод "post" отправляет пост-запрос в сервлет
-       --%>
-        <form method="post">
-            <label>Name:<br />
-                <input type="text" name="name"><br />
-            </label>
-            <label>Password:<br />
-                <input type="password" name="pass"><br />
-            </label>
-            <%--
-       кнопки type - submit отправляет пост запрос при нажатии на кнопку
-       прописал "name" по нему в методе "doPost" отлавливал нажатие кнопки
-       --%>
-            <button name="enter"  type="submit">Submit</button>
-            <button name="register" type="submit">register</button>
+            <label>Name: ${client.userName}</label>
+            <br/>
+            <label>Password: ${client.password}</label>
 
-        </form>
+        </div>
     </div>
 </div>
 </body>
+<jsp:include page="/views/include/footer.jsp"/>
 </html>
