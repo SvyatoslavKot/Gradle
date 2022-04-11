@@ -1,9 +1,9 @@
 package app.bankApp;
+import app.entities.Account;
 import app.entities.Client;
 import app.entities.Credit;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * class BankCollection save data BankApp
@@ -16,7 +16,9 @@ public class BankCollection {
     /**
      * collection for storing a list of All credits
      */
-    private ArrayList<Credit> creditList = new ArrayList<>();
+    private ArrayList<Credit> creditListOfBank = new ArrayList<>();
+
+    private ArrayList<Account> accountListOfBank = new ArrayList<>();
 
     /**
      * @return clientHashMap
@@ -29,7 +31,11 @@ public class BankCollection {
      *
      * @return creditList
      */
-    public ArrayList<Credit> getCreditList() {
-        return creditList;
+    public ArrayList<Credit> getCreditListOfBank() {
+        return creditListOfBank;
+    }
+
+    public ArrayList<Account> getAccountList() {
+        return accountListOfBank;
     }
 }

@@ -1,4 +1,6 @@
-<%@ page import="app.entities.Client" %><%--
+<%@ page import="app.entities.Client" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %><%--
   Created by IntelliJ IDEA.
   User: NADEZHDA
   Date: 001 01.04.22
@@ -12,21 +14,35 @@
 </head>
 <body>
 <div>
-    ${bank.name}
 
-        <button onclick="location.href='/main'">Main view</button>
-        <button onclick="location.href='/credit/main'">Кредиты</button>
-        <button onclick="location.href='/profileview'">Счета</button>
+    ${bank.name}
+        <button onclick="location.href='/bank_app/main'">ГЛАВНАЯ</button>
+        <button onclick="location.href='/bank_app/credit/main'">Кредиты</button>
+        <button onclick="location.href='/bank_app/profileview'">Счёта</button>
     <%
         Client clientv = (Client) session.getAttribute("client");
         if( clientv!=null){
             if (clientv.getNickName()!=null){ %>
-          <button onclick=location.href='/profileview'> ${client.nickName}  </button>
+          <button onclick=location.href='/bank_app/profileview'> ${client.nickName}  </button>
             <% }else { %>
-                <button onclick=location.href='/logining'>Войти</button>
+                <button onclick=location.href='/bank_app/logining'>Войти</button>
     <%}
      }else { %>
-    <button onclick=location.href='/logining'>Войти</button>
+    <button onclick=location.href='/bank_app/logining'>Войти</button>
     <%}%>
+    <%
+        response.setIntHeader("Refresh", 1);
+        Calendar calendar = new GregorianCalendar();
+        String am_pm;
+        int hour= calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        if(calendar.get(Calendar.AM_PM)==0){
+            am_pm = "AM";
+        }else {
+            am_pm = "PM";
+        }
+        String CT = hour + "h:" + minute + "m. " + am_pm;
+        out.println("Текущее время: " + CT + "\n");
+    %>
 </div>
 

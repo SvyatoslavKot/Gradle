@@ -1,9 +1,7 @@
 package app.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author SvyatoslavK
@@ -15,7 +13,9 @@ public class Client implements Serializable {
     private String id;
     private String nickName;
     private String password;
-    private ArrayList<Credit> CreditList = new ArrayList<>();
+    private Set<Credit> creditListPersn = new HashSet<>();
+    private Set<Account> accountListPersn = new HashSet<>();
+
 
     public Client() {
     }
@@ -33,6 +33,7 @@ public class Client implements Serializable {
         this.id = id;
         this.nickName = nickName;
         this.password = password;
+
     }
     /**
      *
@@ -106,20 +107,20 @@ public class Client implements Serializable {
         this.password = password;
     }
 
-    /**
-     *
-     * @return CreditList
-     */
-    public ArrayList<Credit> getCreditList() {
-        return CreditList;
+    public Set<Credit> getCreditListPersn() {
+        return creditListPersn;
     }
 
-    /**
-     *
-     * @param creditList
-     */
-    public void setCreditList(ArrayList<Credit> creditList) {
-        CreditList = creditList;
+    public void setCreditListPersn(Set<Credit> creditListPersn) {
+        creditListPersn = creditListPersn;
+    }
+
+    public Set<Account> getAccountListPersn() {
+        return accountListPersn;
+    }
+
+    public void setAccountListPersn(Set<Account> accountListPersn) {
+        this.accountListPersn = accountListPersn;
     }
 
     @Override

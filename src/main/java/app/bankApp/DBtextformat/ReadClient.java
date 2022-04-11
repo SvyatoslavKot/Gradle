@@ -9,7 +9,15 @@ import java.util.Map;
 
 import static java.lang.Thread.currentThread;
 
+/**
+ * @author S. Kotov
+ * class for reading client data from file .txt format
+ * pattern Singleton
+ */
 public class ReadClient {
+    /**
+     * path to data file
+     */
     String path = "C:/Users/NADEZHDA/IdeaProjects/Gradle/src/main/resources/textDB/clients.txt";
 
     private static ReadClient readClient;
@@ -22,19 +30,26 @@ public class ReadClient {
         }
         return readClient;
     }
-    HashMap<String, Client> clientHashMap = new HashMap<>();
+    //создаем коллекцию для хранения полученных данных
+    HashMap<String, Client> clientHashMap = new HashMap<>();//создаем локальную коллекцию hashmap
     Client client;
+
+    /**
+     * method reading data from file
+     * @param bank
+     * @exception FileNotFoundException,IOException
+     */
     public  void readBD (Bank bank){
-        try {
+        try {//устанавливаем связь с файлом
                 FileInputStream fi = new FileInputStream(path);
                 BufferedReader br = new BufferedReader(new InputStreamReader(fi));
                 String currentLine = " ";
-            while (null != (currentLine = br.readLine())) {
-                client = convertStringToClient(currentLine);
-                clientHashMap.put(client.getNickName(), client);
 
+                while (null != (currentLine = br.readLine())) {// если файл не пустой то читаем по строчно данные
+                client = convertStringToClient(currentLine);//создаем объект на основе прочитанной строки
+                clientHashMap.put(client.getNickName(), client);//помещаем объект в мапу
             }
-            bank.getBankCollection().getClientHashMap().putAll(clientHashMap);
+            bank.getBankCollection().getClientHashMap().putAll(clientHashMap);//объединяем коллекции
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -42,11 +57,16 @@ public class ReadClient {
         }
 
         }
+
+    /**
+     * method that converts currentLine to Client object
+     * @param currentLine
+     * @return Client
+     */
     public Client convertStringToClient ( String currentLine){
-        String[] sp = currentLine.split(" ");
+        String[] sp = currentLine.split(" ");//разделяем строку по пробелам
         Client client1 = new Client();
         for (String s : sp){
-
             getIdandSet(s,client1);
             getNameAndSet(s,client1);
             getLastNameAndSet(s,client1);
@@ -56,7 +76,7 @@ public class ReadClient {
         return client1;
     }
     private void getPassword (String s, Client client1){
-        if (s!= null && s.contains("password:")){
+        if (s!= null && s.contains("password:")){       //
             client1.setPassword(s.split(":")[1]);
         }
     }

@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/credit/main")
+@WebServlet("/bank_app/credit/main")
 public class CreditServlets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,7 +21,7 @@ public class CreditServlets extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if (req.getParameter("openCredit")!= null){
-            resp.sendRedirect("/credit/open");
+            resp.sendRedirect("/bank_app/credit/open");
         }
     }
 }

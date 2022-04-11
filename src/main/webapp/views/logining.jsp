@@ -2,6 +2,7 @@
   Created by IntelliJ IDEA.
   User: Svyat
 --%>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -58,6 +59,7 @@
         </form>
     </div>
 </div>
-</body>
 <jsp:include page="/views/include/footer.jsp"/>
+</body>
+
 </html>

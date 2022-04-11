@@ -20,7 +20,7 @@ import java.net.URLConnection;
  * Servlet главной страница в web.xml прописан маппинг на main.jsp
  * */
 
-@WebServlet("/main")
+@WebServlet("/bank_app/main")
 public class MainServlet extends HttpServlet {
     final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
     Client client = new Client();
@@ -36,10 +36,11 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         readClient.readBD(bank);
-        System.out.println(bank.getBankCollection().getClientHashMap().entrySet());
+
         ServletContext servletContext = getServletContext();
+        servletContext.setAttribute("bank", bank);
         Client client = (Client) servletContext.getAttribute("client");
-        System.out.println(client);
+        System.out.println(bank.getBankCollection().getCreditListOfBank().size());
 
         req.setAttribute("client" , client);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/main.jsp");

@@ -18,16 +18,34 @@
     <label>Сумма:<br />
         <input type="text" name="sum"><br />
     </label>
-    <label>Срок кредита:<br />
-        <input type="text" name="term"><br />
-    </label>
+    <br />
     <label>Тип:<br />
-        <input type="text" name="type"><br />
-    </label>
+        <select name="type" >
+            <option value="CREDITCARD">Кредитная</option>
+            <option value="CONSUMER">Потребительский</option>
+            <option value="AVTO">Автокредит</option>
+            <option value="HYPOTHEC">Ипотека</option>
+        </select>
+    </label><br />
+    <br />
+    <label>Срок кредита:<br />
+        <select name="term" >
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="12">12</option>
+            <option value="18">18</option>
+            <option value="24">24</option>
+            <option value="36">36</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="240">240</option>
+            <option value="360">360</option>
+        </select>
+    </label><br />
     <%--
 кнопки type - submit отправляет пост запрос при нажатии на кнопку
 прописал "name" по нему в методе "doPost" отлавливал нажатие кнопки
---%>
+--%><br />
     <button name="calck"  type="submit">Рассчитать</button>
     <button name="cancel" type="submit">Назад</button>
 </form>

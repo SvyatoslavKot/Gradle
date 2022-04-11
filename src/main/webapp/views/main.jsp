@@ -1,4 +1,6 @@
-<%@ page import="app.bankApp.Bank" %><%--
+<%@ page import="app.bankApp.Bank" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %><%--
   Created by IntelliJ IDEA.
   User: Svyat
 --%>
@@ -14,11 +16,9 @@
 <body>
 <div>
     <div>
-        <h3>Главная страница</h3>
+        <h4>Главная страница </h4>
         <div>
-            <label>Name: ${client.userName}</label>
-            <br/>
-            <label>Password: ${client.password}</label>
+            <p>Контент главной страницы</p>
 
         </div>
     </div>

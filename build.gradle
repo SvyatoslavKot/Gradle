@@ -27,7 +27,10 @@ dependencies {
 
 
 }
-
+//gretty {
+   // httpPort = 8081
+    //contextPath = '/bank_app'
+//}
 
 test {
     useJUnitPlatform()

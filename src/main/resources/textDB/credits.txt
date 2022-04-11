@@ -1,0 +1,6 @@
+creditName:null accountNumber:null amount:0 ptc:0.0 data:null creditTerm:0 payment:0.0 idHolder:hh 
+creditName:Avto_Credit_1 accountNumber:1338614597500003 amount:700000 ptc:17.9 data:21.01.2020 creditTerm:24 payment:34913.05830876975 idHolder:hh
+creditName:Avto_Credit_1 accountNumber:1338248185610003 amount:700000 ptc:17.9 data:31.01.2020 creditTerm:24 payment:34913.05830876975 idHolder:hh
+creditName:Avto_Credit_1 accountNumber:1338826750810004 amount:888888 ptc:17.9 data:11.01.2020 creditTerm:36 payment:32090.857160350053 idHolder:hh
+creditName:Consumer_2 accountNumber:1338231898030005 amount:200000 ptc:25.9 data:01.01.2020 creditTerm:12 payment:18326.481657247456 idHolder:Kot_Svyat
+creditName:Consumer_4 accountNumber:1338627741220006 amount:888888 ptc:19.9 data:01.05.2020 creditTerm:12 payment:81450.94813673689 idHolder:Kot_Svyat

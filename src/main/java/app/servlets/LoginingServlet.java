@@ -1,7 +1,9 @@
 package app.servlets;
 
 import app.bankApp.Bank;
+import app.bankApp.DBtextformat.ReadAccount;
 import app.bankApp.DBtextformat.ReadClient;
+import app.bankApp.DBtextformat.ReaderCredit;
 import app.bankApp.serviceBank.PasswordCheck;
 import app.entities.Client;
 import jakarta.servlet.RequestDispatcher;
@@ -14,11 +16,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-@WebServlet("/logining")
+@WebServlet("/bank_app/logining")
 public class LoginingServlet extends HttpServlet {
     final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
     Client client = new Client();
     ReadClient readClient = ReadClient.getInstance();
+    ReaderCredit readerCredit = ReaderCredit.getInstance();
+    ReadAccount readAccount = ReadAccount.getInstance();
     PasswordCheck passwordCheck = new PasswordCheck();
     String nickName;
     String password;
@@ -36,10 +40,12 @@ public class LoginingServlet extends HttpServlet {
         // отправляет в запрос на страницу main.jsp
         Bank bank = Bank.getInstance();
         readClient.readBD(bank);
+        readerCredit.readBD(bank);
+        readAccount.readBD(bank);
         // отправил атрибут на страницу с именем банк
         ServletContext servletContext = getServletContext();
         servletContext.setAttribute("bank", bank);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/logining.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/logining.jsp");
         requestDispatcher.forward(req, resp);
     }
     /**
@@ -58,7 +64,7 @@ public class LoginingServlet extends HttpServlet {
         //цикл который получает параметр кнопок из request
         if (req.getParameter("register")!= null){
             // отправляет клиента на страницу /register
-            resp.sendRedirect("/register" );
+            resp.sendRedirect("/bank_app/register" );
         }else if (req.getParameter("enter")!= null){
 
             if (!nickName.isEmpty() && !password.isEmpty()){
@@ -68,7 +74,7 @@ public class LoginingServlet extends HttpServlet {
                     System.out.println(client);
                     HttpSession session = req.getSession();
                     session.setAttribute("client" , client);
-                    resp.sendRedirect("/profileview");
+                    resp.sendRedirect("/bank_app/main");
                 }else {
                     doGet(req, resp);
                 }

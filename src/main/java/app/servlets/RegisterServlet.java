@@ -19,7 +19,7 @@ import java.io.IOException;
  * Servlet страницы регистрации профиля клиента
  * Mapping прописан в @WebServlet
  * */
-@WebServlet("/register")
+@WebServlet("/bank_app/register")
 public class RegisterServlet extends HttpServlet {
 
     Client client ;
@@ -85,7 +85,7 @@ public class RegisterServlet extends HttpServlet {
                 HttpSession session = req.getSession();
                 session.setAttribute("client", client);
 
-                resp.sendRedirect("/main");
+                resp.sendRedirect("/bank_app/main");
             }
         }
 

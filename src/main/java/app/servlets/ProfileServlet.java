@@ -19,7 +19,7 @@ import java.io.IOException;
 
 
 
-@WebServlet("/profileview")
+@WebServlet("/bank_app/profileview")
 public class ProfileServlet extends HttpServlet {
     Client client = new Client();
 
