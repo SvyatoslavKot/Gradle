@@ -5,6 +5,15 @@
 <%-- импорт библиотеки тегов JSTL позволяет добавить функционал на страницу jsp --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%--Теги для работы с XML-документами--%>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+
+<%-- Теги для работы с базами данных--%>
+<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
+
+<%-- Теги для форматирования и интернационализации информации (i10n и i18n)--%>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Svyat
@@ -18,7 +27,6 @@
     <meta charset="UTF-8">
 </head>
 <body>
-
 <table border="1" >
     <h4>Таблица всех клиентов</h4>
     <tr>
@@ -53,8 +61,11 @@
         <td>Срок</td>
         <td>Платёж</td>
         <td>ID держателя</td>
+
     </tr>
+    
     <c:forEach items="${creditList}" var="creditList">
+
         <tr>
             <td>${creditList.creditName}</td>
             <td>${creditList.accountNumber}</td>
@@ -64,12 +75,13 @@
             <td>${creditList.creditTerm}</td>
             <td>${creditList.paymentMonth}</td>
             <td>${creditList.idHolder}</td>
+            <td><a href=/bank_app/logining">ccskrf</a></td>
+
         </tr>
         </c:forEach>
 </table>
 </option>
 </table>
-
 
 </body>
 </html>

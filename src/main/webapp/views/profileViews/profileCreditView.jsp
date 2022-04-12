@@ -23,6 +23,7 @@
         <td>Дата Открытия</td>
         <td>Срок погашения</td>
         <td>Платёж</td>
+        <td>Внести платех</td>
     </tr>
     <%-- Реализация цикла forEach при помощи библиотеки тегов JSTL --%>
     <c:forEach items="${credits}" var="credit_list">
@@ -34,6 +35,7 @@
             <td>${credit_list.openingDate}</td>
             <td>${credit_list.creditTerm}</td>
             <td>${credit_list.paymentMonth}</td>
+            <td><input alt="center" type="submit" name="pay" value="pay"></td>
         </tr>
         </c:forEach>
 </table>
