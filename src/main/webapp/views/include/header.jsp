@@ -18,7 +18,8 @@
     ${bank.name}
         <button onclick="location.href='/bank_app/main'">ГЛАВНАЯ</button>
         <button onclick="location.href='/bank_app/credit/main'">Кредиты</button>
-        <button onclick="location.href='/bank_app/profileview'">Счёта</button>
+        <button onclick="location.href='/bank_app/account/main'">Счёта</button>
+        <button onclick="location.href='/bank_app/main/payment'">Платежи</button>
     <%
         Client clientv = (Client) session.getAttribute("client");
         if( clientv!=null){

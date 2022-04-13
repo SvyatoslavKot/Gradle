@@ -1,8 +1,10 @@
 package app.servlets;
 
 import app.bankApp.Bank;
+import app.bankApp.DBtextformat.ReadAccount;
 import app.bankApp.DBtextformat.ReadClient;
 import app.bankApp.DBtextformat.ReaderCredit;
+import app.entities.Account;
 import app.entities.Client;
 import app.entities.Credit;
 import jakarta.servlet.RequestDispatcher;
@@ -25,6 +27,7 @@ public class AdminServlet extends HttpServlet {
     Bank bank = Bank.getInstance();
     ReadClient readClient = ReadClient.getInstance();
     ReaderCredit readerCredit = ReaderCredit.getInstance();
+    ReadAccount readAccount = ReadAccount.getInstance();
 
 
     @Override
@@ -32,8 +35,12 @@ public class AdminServlet extends HttpServlet {
 
         readClient.readBD(bank);
         readerCredit.readBD(bank);
+        readAccount.readBD(bank);
         HashMap<String, Client> clientList = bank.getBankCollection().getClientHashMap();
         ArrayList<Credit> credits  = bank.getBankCollection().getCreditListOfBank();
+        ArrayList<Account> accounts = bank.getBankCollection().getAccountList();
+
+        req.setAttribute("accountList", accounts);
         req.setAttribute("creditList", credits);
         req.setAttribute("clientMap", clientList);
         System.out.println(clientList.entrySet());

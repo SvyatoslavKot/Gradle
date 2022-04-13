@@ -16,8 +16,8 @@
 <table border="1" >
     <h4>Список ваших кредитов</h4>
     <tr>
-        <td>Название</td>
         <td>Номер счета</td>
+        <td>Название</td>
         <td>Задолжность</td>
         <td>Проценты</td>
         <td>Дата Открытия</td>
@@ -28,8 +28,8 @@
     <%-- Реализация цикла forEach при помощи библиотеки тегов JSTL --%>
     <c:forEach items="${credits}" var="credit_list">
         <tr>
-            <td>${credit_list.creditName}</td>
             <td>${credit_list.accountNumber}</td>
+            <td><a href="/bank_app/main">${credit_list.creditName}</a></td>
             <td>${credit_list.amount}</td>
             <td>${credit_list.ptc}</td>
             <td>${credit_list.openingDate}</td>

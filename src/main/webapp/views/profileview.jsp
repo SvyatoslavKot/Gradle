@@ -25,7 +25,7 @@
     </div>
     <div>
             <button onclick=location.href='/bank_app/profile/credit' >Кредиты</button>
-            <button onclick=location.href='/bank_app/profileview'>Счета</button>
+            <button onclick=location.href='/bank_app/profile/account'>Счета</button>
             <button onclick=location.href='/bank_app/profileview'>Страховки</button>
     </div>
 </div>

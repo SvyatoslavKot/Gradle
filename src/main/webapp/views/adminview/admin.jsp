@@ -4,16 +4,6 @@
 
 <%-- импорт библиотеки тегов JSTL позволяет добавить функционал на страницу jsp --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%--Теги для работы с XML-документами--%>
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
-
-<%-- Теги для работы с базами данных--%>
-<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
-
-<%-- Теги для форматирования и интернационализации информации (i10n и i18n)--%>
-<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <%--
   Created by IntelliJ IDEA.
   User: Svyat
@@ -61,11 +51,8 @@
         <td>Срок</td>
         <td>Платёж</td>
         <td>ID держателя</td>
-
     </tr>
-    
     <c:forEach items="${creditList}" var="creditList">
-
         <tr>
             <td>${creditList.creditName}</td>
             <td>${creditList.accountNumber}</td>
@@ -79,6 +66,35 @@
 
         </tr>
         </c:forEach>
+</table>
+
+<table border="1" >
+    <h4>Таблица всех кридитов</h4>
+    <tr>
+        <td>Название</td>
+        <td>Номер счета</td>
+        <td>Баланс</td>
+        <td>Срок обслуживания</td>
+        <td>Годовое обслуживание</td>
+        <td>CashBack</td>
+        <td>ID держателя</td>
+        <td>pin</td>
+    </tr>
+
+    <c:forEach items="${accountList}" var="account">
+        <tr>
+            <td>${account.nameAccount}</td>
+            <td>${account.accountNumber}</td>
+            <td>${account.moneyInAccount}</td>
+            <td>${account.creditTerm}</td>
+            <td>${account.payment}</td>
+            <td>${account.cashBack}</td>
+            <td>${account.idHolder}</td>
+            <td>${account.pin}</td>
+            <td><a href=/bank_app/logining">ccskrf</a></td>
+
+        </tr>
+    </c:forEach>
 </table>
 </option>
 </table>
