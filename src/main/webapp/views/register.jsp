@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" charset="UTF-8" content="text/html; charset=UTF-8" />
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<jsp:useBean id="client" class="app.entities.Client" scope="session"/>
+
 
 <html>
 <head>

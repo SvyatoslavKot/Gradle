@@ -23,7 +23,6 @@ import java.net.URLConnection;
 @WebServlet("/bank_app/main")
 public class MainServlet extends HttpServlet {
     final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
-    Client client = new Client();
     ReadClient readClient = ReadClient.getInstance();
     Bank bank = Bank.getInstance();
     /**
@@ -35,12 +34,13 @@ public class MainServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         readClient.readBD(bank);
 
         ServletContext servletContext = getServletContext();
         servletContext.setAttribute("bank", bank);
         Client client = (Client) servletContext.getAttribute("client");
-        System.out.println(bank.getBankCollection().getCreditListOfBank().size());
+        System.out.println(client);
 
         req.setAttribute("client" , client);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/main.jsp");

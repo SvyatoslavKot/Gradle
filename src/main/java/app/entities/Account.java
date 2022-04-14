@@ -1,9 +1,14 @@
 package app.entities;
 
 import app.bankApp.Bank;
+import app.bankApp.FactoryProduct.CreditFactory.CreditCreater;
 import app.bankApp.FactoryProduct.accountFactory.AccountCreater;
+import app.bankApp.FactoryProduct.accountFactory.StandartAccount;
 import app.bankApp.serviceBank.GenerateAccountNumber;
-
+/**
+ * @author SvyatoslavK
+ * create Account implements interface  {@link AccountCreater#create(Bank, Client, int, String, String)} , this entities Account object
+ * */
 public class Account  implements AccountCreater {
     private String nameAccount;
     private String accountNumber;
@@ -18,10 +23,23 @@ public class Account  implements AccountCreater {
     GenerateAccountNumber genNum = new GenerateAccountNumber();
 
 
-
+    /**
+     * default constructor
+     */
     public Account() {
     }
 
+    /**
+     * constructor create Object Account accepts all parameters except accountNumber and MoneyInAccount
+     * accountNumber created inside the this constructor with class {@link GenerateAccountNumber#accountNumber(int)}
+     * @param bank
+     * @param nameAccount
+     * @param creditTerm
+     * @param payment
+     * @param cashBack
+     * @param idHolder
+     * @param pin
+     */
     public Account(Bank bank, String nameAccount, int creditTerm, int payment, double cashBack, String idHolder, String pin) {
         this.nameAccount = nameAccount;
         this.accountNumber = genNum.accountNumber(bank.getBankCollection().getCreditListOfBank().size());

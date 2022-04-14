@@ -13,7 +13,7 @@ import java.io.IOException;
 public class CreditServlets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/creditView.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/bankProductViews/creditView.jsp");
         requestDispatcher.forward(req,resp);
     }
 

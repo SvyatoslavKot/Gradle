@@ -33,6 +33,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        resp.setCharacterEncoding("UTF-8");
         readClient.readBD(bank);
         readerCredit.readBD(bank);
         readAccount.readBD(bank);

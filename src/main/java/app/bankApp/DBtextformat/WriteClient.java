@@ -29,8 +29,7 @@ public class WriteClient {
         File file = new File(path);
 
         try {
-            FileOutputStream os = new FileOutputStream(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os));
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path),"utf-8"));
             bufferedWriter.write("");
             HashMap<String, Client> clientHashMap = bank.getBankCollection().getClientHashMap();
             for (Map.Entry entry : clientHashMap.entrySet()) {

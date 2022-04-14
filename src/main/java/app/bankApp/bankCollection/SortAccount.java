@@ -9,8 +9,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Class for sorting Account
+ */
 public class SortAccount {
-
+    /**
+     * Sort Account by param {@link Account#getMoneyInAccount()} Low to Height, accept input Collection List<Account>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param accountList
+     * @return List
+     */
     public List<Account> sortByMoneyLow(List<Account> accountList) {
         List list = new ArrayList(accountList);
         Collections.sort(list, new Comparator<Account>() {
@@ -24,7 +32,12 @@ public class SortAccount {
         return list;
     }
 
-
+    /**
+     * Sort Account by param {@link Account#getMoneyInAccount()}Height to Low, accept input Collection List<Account>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param accountList
+     * @return List
+     */
     public List<Account> sortByMoneyHight(List<Account> accountList) {
         List list = accountList;
         Collections.sort(list, new Comparator<Account>() {
@@ -37,7 +50,12 @@ public class SortAccount {
         });
         return list;
     }
-
+    /**
+     * Sort Account by param {@link Account#getPayment()}Height to Low, accept input Collection List<Account>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param accountList
+     * @return List
+     */
     public List<Account> sortByPaymentHeight(List<Account> accountList) {
         List list = accountList;
         Collections.sort(list, new Comparator<Account>() {
@@ -50,7 +68,12 @@ public class SortAccount {
         });
         return list;
     }
-
+    /**
+     * Sort Account by param {@link Account#getPayment()}Low to Height, accept input Collection List<Account>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param accountList
+     * @return List
+     */
     public List<Account> sortByPaymentLow(List<Account> accountList) {
         List list = new ArrayList(accountList);
         Collections.sort(list, new Comparator<Account>() {
@@ -66,7 +89,12 @@ public class SortAccount {
 
 
 
-
+    /**
+     * Sort Account by param {@link Account#getNameAccount()}, accept input Collection List<Account>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param accountList
+     * @return List
+     */
     public List<Account> sortByName(List<Account> accountList) {
         List list = new ArrayList(accountList);
         Collections.sort(list, new Comparator<Account>() {
@@ -78,7 +106,12 @@ public class SortAccount {
         return list;
     }
 
-
+    /**
+     * Sort Account by param {@link Account#getIdHolder()}, accept input Collection List<Account>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param accountList
+     * @return List
+     */
     public List<Account> sortByIdHolder(List<Account> accountList) {
         List list = new ArrayList(accountList);
         Collections.sort(list, new Comparator<Account>() {

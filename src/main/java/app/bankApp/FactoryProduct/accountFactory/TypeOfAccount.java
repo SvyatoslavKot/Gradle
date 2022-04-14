@@ -1,5 +1,7 @@
 package app.bankApp.FactoryProduct.accountFactory;
-
+/**
+ * enum that stores constants type of Account
+ */
 public enum TypeOfAccount {
     STANDARD("Standard_account"),
     CURRENCY("Currency_account"),

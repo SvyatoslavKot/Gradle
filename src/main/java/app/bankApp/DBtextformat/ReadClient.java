@@ -41,8 +41,7 @@ public class ReadClient {
      */
     public  void readBD (Bank bank){
         try {//устанавливаем связь с файлом
-                FileInputStream fi = new FileInputStream(path);
-                BufferedReader br = new BufferedReader(new InputStreamReader(fi));
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"));
                 String currentLine = " ";
 
                 while (null != (currentLine = br.readLine())) {// если файл не пустой то читаем по строчно данные

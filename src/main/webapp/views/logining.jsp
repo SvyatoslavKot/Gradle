@@ -15,9 +15,6 @@
     <%--
    встроенныё javaCod показывает последнего добавленного юзера
 --%>
-    <jsp:useBean id="client" class="app.entities.Client" scope="session"/>
-
-    <p> </p>
     <div>
         <div>
             <h2>Login</h2>

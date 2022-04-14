@@ -10,7 +10,7 @@ import app.entities.Credit;
  */
 public class CreditFactory {
     /**
-     * create an object of credit class according to the specified parameters creditType
+     * create an object of credit class according to the specified parameters creditType {@link TypeOfCredit} which is const
      * @param bank
      * @param client
      * @param sum

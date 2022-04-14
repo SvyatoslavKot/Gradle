@@ -18,12 +18,14 @@ public class ConsumerCredit extends Credit {
 
     /**
      * method interface of {@link CreditCreater#create(Bank, Client, int, int)}
-     * credit object creation cycle of three parameters
+     * credit object creation, used constructor {@link Credit#Credit(Bank, String, String, int, double, int)}
      * @see CreditCreater
+     * @see Credit
      * @param bank
      * @param client
      * @param sum
      * @param creditTerm
+     * @return Credit
      */
     @Override
     public Credit create(Bank bank, Client client, int sum, int creditTerm) {

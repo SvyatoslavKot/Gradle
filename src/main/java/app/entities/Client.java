@@ -13,10 +13,18 @@ public class Client implements Serializable {
     private String id;
     private String nickName;
     private String password;
+    /**
+     * HashSet contains the Credits Client
+     */
     private Set<Credit> creditListPersn = new HashSet<>();
+    /**
+     * HashSet contains the Account Client
+     */
     private Set<Account> accountListPersn = new HashSet<>();
 
-
+    /**
+     * default constructor
+     */
     public Client() {
     }
     /**

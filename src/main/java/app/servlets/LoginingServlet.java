@@ -37,6 +37,7 @@ public class LoginingServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         // отправляет в запрос на страницу main.jsp
         Bank bank = Bank.getInstance();
         readClient.readBD(bank);
@@ -57,6 +58,7 @@ public class LoginingServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         //получает значение с параметром "name"
         nickName = req.getParameter("name");
         //получает значение с параметром "pass"

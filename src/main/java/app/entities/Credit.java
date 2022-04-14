@@ -25,8 +25,10 @@ public class Credit implements CreditCreater{
     }
 
     /**
-     * Constructor create Credit class
-     * @param bank for generate accountNumber
+     * Constructor create Credit class accepts all parameters except accountNumber,openingDate,paymentMonth
+     * accountNumber created inside the this constructor with class {@link GenerateAccountNumber#accountNumber(int)}
+     * param openingDate created default
+     * param paymentMonth created inside with class {@link CreditCalculationPayment#calc(int, double, int)} which used parameters constructor
      * @param idHolder
      * @param creditName
      * @param amount

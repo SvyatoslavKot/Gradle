@@ -1,12 +1,20 @@
 package app.bankApp.bankCollection;
 
 import app.bankApp.Bank;
+import app.entities.Account;
 import app.entities.Credit;
 
 import java.util.*;
-
+/**
+ * Class for sorting Credit
+ */
 public class SortCreditList {
-
+    /**
+     * Sort Credit by param {@link Credit#getAmount()} Low to Height, accept input Collection List<Credit>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param creditSet Collection.List
+     * @return List
+     */
     public List<Credit> sortByAmountLow(List<Credit> creditSet) {
         List list = new ArrayList(creditSet);
         Collections.sort(list, new Comparator<Credit>() {
@@ -20,7 +28,12 @@ public class SortCreditList {
         return list;
     }
 
-
+    /**
+     * Sort Credit by param {@link Credit#getAmount()} Height to Low, accept input Collection List<Credit>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param creditSet Collection.List
+     * @return List
+     */
     public List<Credit> sortByAmountHight(List<Credit> creditSet) {
         List list = creditSet;
         Collections.sort(list, new Comparator<Credit>() {
@@ -34,7 +47,12 @@ public class SortCreditList {
         return list;
     }
 
-
+    /**
+     * Sort Credit by param {@link Credit#getCreditName()} , accept input Collection List<Credit>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param creditSet Collection.List
+     * @return List
+     */
     public List<Credit> sortByName(List<Credit> creditSet) {
         List list = new ArrayList(creditSet);
         Collections.sort(list, new Comparator<Credit>() {
@@ -46,7 +64,12 @@ public class SortCreditList {
         return list;
     }
 
-
+    /**
+     * Sort Credit by param {@link Credit#getOpeningDate()} , accept input Collection List<Credit>
+     * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
+     * @param creditSet Collection.List
+     * @return List
+     */
     public List<Credit> sortByDate(List<Credit> creditSet) {
         List list = new ArrayList(creditSet);
         Collections.sort(list, new Comparator<Credit>() {

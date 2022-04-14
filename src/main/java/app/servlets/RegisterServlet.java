@@ -35,6 +35,7 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         readClient.readBD(bank);
         System.out.println(bank.getBankCollection().getClientHashMap().entrySet());
 
@@ -52,7 +53,8 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         String userName = req.getParameter("name");
+        resp.setCharacterEncoding("UTF-8");
+        String userName = req.getParameter("name");
          req.setAttribute("name", userName);
          String lastName = req.getParameter("lastName");
          req.setAttribute("lastName", lastName);
