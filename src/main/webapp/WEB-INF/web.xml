@@ -3,15 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <servlet>
-        <servlet-name>test</servlet-name>
-        <servlet-class>app.servlets.TestServlet</servlet-class>
-    </servlet>
+<context-param>
+    <param-name>bank</param-name>
+    <param-value>Bank</param-value>
+</context-param>
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>CharsetFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
 
-    <servlet-mapping>
-        <servlet-name>test</servlet-name>
-        <url-pattern>/test</url-pattern>
-    </servlet-mapping>
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/views/*</url-pattern>
+    </filter-mapping>
+
 
     <error-page>
         <error-code>404</error-code>

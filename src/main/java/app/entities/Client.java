@@ -1,11 +1,11 @@
 package app.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author SvyatoslavK
- * создает объект клиента
+ * create Client
  * */
 public class Client implements Serializable {
     private String userName;
@@ -13,19 +13,36 @@ public class Client implements Serializable {
     private String id;
     private String nickName;
     private String password;
+    /**
+     * HashSet contains the Credits Client
+     */
+    private Set<Credit> creditListPersn = new HashSet<>();
+    /**
+     * HashSet contains the Account Client
+     */
+    private Set<Account> accountListPersn = new HashSet<>();
 
+    /**
+     * default constructor
+     */
     public Client() {
     }
     /**
-     *конструктор создания клиента
+     * Constructor Client object
      * @param userName
+     * @param lastName
+     * @param id
+     * @param nickName
      * @param password
      */
-    public Client(String userName, String password) {
+    public Client(String userName, String lastName, String id, String nickName, String password) {
         this.userName = userName;
+        this.lastName = lastName;
+        this.id = id;
+        this.nickName = nickName;
         this.password = password;
-    }
 
+    }
     /**
      *
      * @return lastName
@@ -98,10 +115,29 @@ public class Client implements Serializable {
         this.password = password;
     }
 
+    public Set<Credit> getCreditListPersn() {
+        return creditListPersn;
+    }
+
+    public void setCreditListPersn(Set<Credit> creditListPersn) {
+        creditListPersn = creditListPersn;
+    }
+
+    public Set<Account> getAccountListPersn() {
+        return accountListPersn;
+    }
+
+    public void setAccountListPersn(Set<Account> accountListPersn) {
+        this.accountListPersn = accountListPersn;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
                 "userName='" + userName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", id='" + id + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

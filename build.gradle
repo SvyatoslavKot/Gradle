@@ -12,6 +12,7 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     testImplementation 'junit:junit:4.11'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
@@ -19,9 +20,16 @@ dependencies {
     implementation group: 'org.glassfish', name: 'javax.servlet.jsp', version: '3.1'
     compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
 
+    //implementation group: 'javax.servlet.jsp.jstl', name: 'jstl', version: '1.2'
+    //implementation group: 'jakarta.servlet.jsp.jstl', name: 'jakarta.servlet.jsp.jstl-api', version: '2.0.0'
 
+
+   providedCompile  group: 'javax.servlet', name: 'jstl', version: '1.2'
 }
-
+//gretty {
+   // httpPort = 8081
+    //contextPath = '/bank_app'
+//}
 
 test {
     useJUnitPlatform()

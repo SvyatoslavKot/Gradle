@@ -1,14 +1,13 @@
 package app.servlets;
 
 import app.bankApp.Bank;
+import app.bankApp.DBtextformat.ReadClient;
 import app.entities.Client;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.net.URLConnection;
@@ -18,11 +17,11 @@ import java.net.URLConnection;
  * Servlet главной страница в web.xml прописан маппинг на main.jsp
  * */
 
-@WebServlet("/main")
+@WebServlet("/bank_app/main")
 public class MainServlet extends HttpServlet {
     final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
-    Client client = new Client();
-
+    ReadClient readClient = ReadClient.getInstance();
+    Bank bank = Bank.getInstance();
     /**
      * метод обрабатывает GET запросы
      * @param req
@@ -32,14 +31,13 @@ public class MainServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // отправляет в запрос на страницу main.jsp
+        resp.setCharacterEncoding("UTF-8"); //кодировка utf-8
+        readClient.readBD(bank);// чтение клиентов из txt.файла
 
-        Bank bank = Bank.getInstance();
-        // отправил атрибут на страницу с именем банк
-        req.setAttribute("bank", bank);
+        ServletContext servletContext = getServletContext();// получаем контекст
+        servletContext.setAttribute("bank", bank);//кладем в контекс приложения объект bank
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/main.jsp");
-        requestDispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/views/main.jsp").forward(req, resp);//формируем страницу
     }
 
     /**
@@ -51,27 +49,7 @@ public class MainServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //получает значение с параметром "name"
-        String name = req.getParameter("name");
-        //получает значение с параметром "pass"
-        String password = req.getParameter("pass");
-//цикл который получает параметр кнопок из request
-        if (req.getParameter("register")!= null){
-            // отправляет клиента на страницу /register
-            resp.sendRedirect("/register" );
-        }else if (req.getParameter("enter")!= null){
-            if (name.isEmpty() || password.isEmpty()){
-                //устанавливает значение атрибута с именем "text", если поля в форме пустые
-                req.setAttribute("text", TEXT);
-                //выполняет метод doGet для перезапуска страницы
-                doGet(req,resp);
-            }else
-                //отправляет клиента на страницу "/profileview" , если поля заполнены
-                client.setPassword(password);
-            client.setUserName(name);
-            ServletContext servletContext = getServletContext();
-            servletContext.setAttribute("client" , client);
-            resp.sendRedirect("/profileview");
+
         }
-    }
+
 }
