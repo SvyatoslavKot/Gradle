@@ -29,14 +29,17 @@ public class PasswordCheck {
      * @return Client
      */
     public Client chekPassword(String nickName, String password) {
-        for (Map.Entry entry : clientHashMap.entrySet()) {
-            if (entry.getKey().equals(nickName)) {
-                client = (Client) entry.getValue();
-                if (client.getPassword().equals(password)) {
-                    return client;
-                }
-            } else return null;
+        System.out.println(bank.getBankCollection().getClientHashMap().entrySet());
+        Client a = clientHashMap.get(nickName);
+        if (a!= null){
+            if (a.getPassword().equals(password)){
+                return a;
+            }else {
+                return null;
+            }
+        }else {
+            return null;
         }
-        return null;
+
     }
 }

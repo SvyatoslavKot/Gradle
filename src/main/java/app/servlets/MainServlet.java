@@ -7,10 +7,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.net.URLConnection;
@@ -34,21 +31,13 @@ public class MainServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        readClient.readBD(bank);
+        resp.setCharacterEncoding("UTF-8"); //кодировка utf-8
+        readClient.readBD(bank);// чтение клиентов из txt.файла
 
-        ServletContext servletContext = getServletContext();
-        servletContext.setAttribute("bank", bank);
-        Client client = (Client) servletContext.getAttribute("client");
-        System.out.println(client);
+        ServletContext servletContext = getServletContext();// получаем контекст
+        servletContext.setAttribute("bank", bank);//кладем в контекс приложения объект bank
 
-        req.setAttribute("client" , client);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/main.jsp");
-        requestDispatcher.forward(req, resp);
-
-       // if (req.getParameter("profileButton")!=null){
-         //   resp.sendRedirect("/profileview");
-       // }
+        getServletContext().getRequestDispatcher("/views/main.jsp").forward(req, resp);//формируем страницу
     }
 
     /**

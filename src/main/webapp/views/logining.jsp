@@ -9,19 +9,16 @@
     <title>Главноая</title>
 </head>
 <body>
-<jsp:include page="/views/include/header.jsp"/>
+<jsp:include page="/views/include/header.jsp"/><%--вложенная страницы--%>
 
 <div>
-    <%--
-   встроенныё javaCod показывает последнего добавленного юзера
---%>
     <div>
         <div>
             <h2>Login</h2>
         </div>
         <%--
-       JavaCod
-       --%>
+   встроенныё javaCod проверяет если пустой филд выводит сообщение
+--%>
         <%
             if (request.getParameter("name")!= null){
                 if (request.getParameter("name").isEmpty()){
@@ -36,8 +33,7 @@
             }
         %>
         <%--
-       форма входа
-       метод "post" отправляет пост-запрос в сервлет
+       форма входа метод "post" отправляет пост-запрос в сервлет
        --%>
         <form method="post">
             <label>Name:<br />
@@ -50,7 +46,7 @@
        кнопки type - submit отправляет пост запрос при нажатии на кнопку
        прописал "name" по нему в методе "doPost" отлавливал нажатие кнопки
        --%>
-            <button name="enter"  type="submit">Submit</button>
+            <button  name="enter"  type="submit">Submit</button>
             <button name="register" type="submit">register</button>
 
         </form>

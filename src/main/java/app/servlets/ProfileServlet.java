@@ -57,12 +57,9 @@ public class ProfileServlet extends HttpServlet {
         //получает значение с параметром "pass"
         password = req.getParameter("pass");
         //цикл который получает параметр кнопок из request
-
         if (req.getParameter("exit")!= null){
-            ServletContext servletContext = getServletContext();
-            servletContext.removeAttribute("client" );
+            session.removeAttribute("client");
             resp.sendRedirect("/bank_app/main");
-            System.out.println(servletContext.getAttribute("client"));
         }else if (req.getParameter("register")!= null){
             // отправляет клиента на страницу /register
             resp.sendRedirect("/bank_app/register" );

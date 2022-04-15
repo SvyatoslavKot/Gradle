@@ -20,13 +20,13 @@
   кнопки type - submit отправляет пост запрос при нажатии на кнопку
   прописал "name" по нему в методе "doPost" отлавливал нажатие кнопки
   --%>
-            <button name="open"  type="submit">Открыть счёт</button>
+            <button name="open"  type="submit">Открыть счёт</button> <br/>
             <br/>
-            <button name="putMoney"  type="submit">Пополнить</button>
+            <button name="putMoney"  type="submit">Пополнить</button> <br/>
             <br/>
-            <button name="Inf"  type="submit">Информация по счёту</button>
+            <button name="Inf"  type="submit">Информация по счёту</button> <br/>
             <br/>
-            <button name="cancel" type="submit">Назад</button>
+            <button name="cancel" type="submit">Назад</button> <br/>
         </form>
     </div>
 <jsp:include page="/views/include/footer.jsp"/>

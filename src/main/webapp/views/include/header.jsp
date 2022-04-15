@@ -1,6 +1,7 @@
 <%@ page import="app.entities.Client" %>
 <%@ page import="java.util.Calendar" %>
-<%@ page import="java.util.GregorianCalendar" %><%--
+<%@ page import="java.util.GregorianCalendar" %>
+<%--
   Created by IntelliJ IDEA.
   User: Svyat
   Date: 001 01.04.22
@@ -8,6 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 
@@ -20,18 +22,20 @@
         <button onclick="location.href='/bank_app/credit/main'">Кредиты</button>
         <button onclick="location.href='/bank_app/account/main'">Счёта</button>
         <button onclick="location.href='/bank_app/main/payment'">Платежи</button>
-    <%
-        Client clientv = (Client) session.getAttribute("client");
-        if( clientv!=null){
-            if (clientv.getNickName()!=null){ %>
-          <button onclick=location.href='/bank_app/profileview'> ${client.nickName}  </button>
-            <% }else { %>
-                <button onclick=location.href='/bank_app/logining'>Войти</button>
-    <%}
-     }else { %>
-    <button onclick=location.href='/bank_app/logining'>Войти</button>
-    <%}%>
-    <%
+        <%
+            Client client = (Client) session.getAttribute("client");%> <%--// присваем значения объекту из сесси по имени--%>
+
+    <c:if test="${client.nickName != null}"><%--//если значение не null то формируем кнопку с логином и ссылкой на профиль--%>
+        <button onclick=location.href='/bank_app/profileview'> ${client.nickName}</button>
+    </c:if>
+
+    <c:if test="${client.nickName == null}"> <%--//если значение не null то формируем кнопку войти--%>
+        <button onclick=location.href='/bank_app/logining'>Войти </button>
+    </c:if>
+
+
+
+        <%
         response.setIntHeader("Refresh", 1);
         Calendar calendar = new GregorianCalendar();
         String am_pm;

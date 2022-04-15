@@ -68,19 +68,17 @@ public class LoginingServlet extends HttpServlet {
             // отправляет клиента на страницу /register
             resp.sendRedirect("/bank_app/register" );
         }else if (req.getParameter("enter")!= null){
-
             if (!nickName.isEmpty() && !password.isEmpty()){
-                //отправляет клиента на страницу "/profileview" , если поля заполнены
-                client = passwordCheck.chekPassword(nickName, password);
+                Client client = passwordCheck.chekPassword(nickName,password);
                 if (client!=null){
-                    System.out.println(client);
                     HttpSession session = req.getSession();
                     session.setAttribute("client" , client);
                     resp.sendRedirect("/bank_app/main");
                 }else {
+                    System.out.println("jj");
                     doGet(req, resp);
                 }
         }else doGet(req, resp);
-    }else doGet(req, resp);
+    }
 }
 }
