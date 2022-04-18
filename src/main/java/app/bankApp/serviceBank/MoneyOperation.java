@@ -1,5 +1,6 @@
 package app.bankApp.serviceBank;
 
+import app.bankApp.exeption.AccountOperationExeption;
 import app.bankApp.exeption.CreditExeption;
 import app.bankApp.serviceBank.CreditCalculationPayment;
 import app.entities.Account;
@@ -7,61 +8,49 @@ import app.entities.Credit;
 
 public class MoneyOperation {
 
-    public String CreditPaymentFromAccount(Credit credit, Account account) throws CreditExeption{
+    public synchronized boolean CreditPaymentFromAccount(Credit credit, Account account) throws CreditExeption, AccountOperationExeption{
         double pay = credit.getPaymentMonth();
-        int balance = account.getMoneyInAccount();
-
-        if (pay > balance){
-            return "Набалансе недостаточно денег";
-        } else if (credit.getAmount()<=0){
-            return  "Кредит закрыт";
-        }else {
-            if (pay > credit.getAmount()){
-                pay = pay - credit.getAmount();
-                account.setMoneyInAccount((int) (balance - pay));
-                credit.setAmount((int) (credit.getAmount()-pay));
-                return "Кредит закрыт";
-            }else {
-                account.setMoneyInAccount((int) (balance - pay));
-                credit.setAmount((int) (credit.getAmount()-pay));
-                return "платеж внесен";
+        if (account.getMoney(pay)){
+            if (credit.getAmount()> pay){
+                credit.setMoney(pay);
+                return true;
             }
+            else account.setMoney(pay - credit.getAmount());
+            throw new CreditExeption("Кредит закрыт", credit,pay);
         }
-    }
-    public String CreditPaymentFromAccount(Credit credit, Account account, int sum) throws CreditExeption {
-        double pay = sum;
-        int balance = account.getMoneyInAccount();
-
-        if (pay > balance) {
-            return "Набалансе недостаточно денег";
-        } else if (credit.getAmount()<=0){
-            return  "Кредит закрыт";
-        }else {
-            if (pay > credit.getAmount()) {
-                pay = pay - credit.getAmount();
-                account.setMoneyInAccount((int) (balance - pay));
-                credit.setAmount((int) (credit.getAmount() - pay));
-                return "Кредит закрыт";
-            } else {
-                account.setMoneyInAccount((int) (balance - pay));
-                credit.setAmount((int) (credit.getAmount() - pay));
-                return "платеж внесен";
-            }
-        }
+        else throw new AccountOperationExeption("На балансе недостаточно средств");
     }
 
-    public boolean TakeMoneyFromAccount(Account account, int sum){
-        if (sum > account.getMoneyInAccount()){
-            return false;
-        }else
-                account.setMoneyInAccount(account.getMoneyInAccount() - sum);
+    public synchronized boolean CreditPaySumFromAccount(Credit credit, Account account, int sum) throws CreditExeption, AccountOperationExeption {
+        if (account.getMoney(sum)){
+            if (credit.getAmount()> sum){
+                credit.setMoney(sum);
+                return true;
+            }else
+                account.setMoney(sum- credit.getAmount());
+                throw new CreditExeption("Кредит закрыт", credit,sum);
+
+        }else throw new AccountOperationExeption("На балансе недостаточно средств");
+
+    }
+
+    public synchronized boolean AccountTakeMoney (Account account, double sum) throws AccountOperationExeption{
+            if (account.getMoney(sum)){
+                return true;
+            }
+            throw new AccountOperationExeption("На балансе недостаточно средств");
+    }
+
+    public synchronized boolean AccountPutMoneyOn(Account account, int sum){
+        account.setMoney(sum);
         return true;
     }
-
-    public boolean PutMoneyOnAccount(Account account, int sum){
-        account.setMoneyInAccount(account.getMoneyInAccount()+sum);
-        return true;
+    public  synchronized boolean AccountTransferMoney (Account sender, Account addressee, double money) throws AccountOperationExeption {
+        if (sender.getMoney(money)){
+            addressee.setMoney(money);
+            return true;
+        }
+        throw new AccountOperationExeption("На балансе недостаточно средств");
     }
-
 
 }

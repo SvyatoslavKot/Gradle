@@ -50,4 +50,9 @@ public class CreditCard extends Credit {
             return credit.create(bank,client,  sum,creditTerm);
         }
     }
+
+    @Override
+    public boolean getMoney(double money) {
+        return false;
+    }
 }

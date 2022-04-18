@@ -13,6 +13,7 @@ public class BankCollection {
      * collection for storing a list of clients
      */
     private HashMap<String, Client> clientHashMap = new HashMap<>();
+
     /**
      * collection for storing a list of All credits
      */

@@ -9,16 +9,17 @@ import app.bankApp.serviceBank.GenerateAccountNumber;
  * @author SvyatoslavK
  * create Account implements interface  {@link AccountCreater#create(Bank, Client, int, String, String)} , this entities Account object
  * */
-public class Account  implements AccountCreater {
+public  class  Account  implements Product,AccountCreater {
     private String nameAccount;
     private String accountNumber;
-    private int moneyInAccount;
+    private double moneyInAccount;
     // private DataFormat openingDate;
     private int creditTerm;
-    private int payment;
+    private double payment;
     private double cashBack;
     private String idHolder;
     private String pin;
+    private boolean lock = false;
 
     GenerateAccountNumber genNum = new GenerateAccountNumber();
 
@@ -40,7 +41,7 @@ public class Account  implements AccountCreater {
      * @param idHolder
      * @param pin
      */
-    public Account(Bank bank, String nameAccount, int creditTerm, int payment, double cashBack, String idHolder, String pin) {
+    public Account(Bank bank, String nameAccount, int creditTerm, double payment, double cashBack, String idHolder, String pin) {
         this.nameAccount = nameAccount;
         this.accountNumber = genNum.accountNumber(bank.getBankCollection().getCreditListOfBank().size());
         this.creditTerm = creditTerm;
@@ -48,6 +49,31 @@ public class Account  implements AccountCreater {
         this.cashBack = cashBack;
         this.idHolder = idHolder;
         this.pin = pin;
+    }
+    @Override
+    public boolean reName(String name) {
+        if (name.equals(" ")){
+            return true;
+        }else
+        return false;
+    }
+    @Override
+    public boolean setMoney(double money) {
+        double balance;
+        balance = this.getMoneyInAccount() + money;
+        this.setMoneyInAccount(balance);
+        return true;
+    }
+
+    @Override
+    public boolean getMoney(double money)  {
+       if (money <= this.getMoneyInAccount()){
+           double balance;
+           balance = this.getMoneyInAccount() - money;
+           this.setMoneyInAccount(balance);
+           return true;
+       }
+        return false;
     }
 
     public String getNameAccount() {
@@ -66,11 +92,11 @@ public class Account  implements AccountCreater {
         this.accountNumber = accountNumber;
     }
 
-    public int getMoneyInAccount() {
+    public double getMoneyInAccount() {
         return moneyInAccount;
     }
 
-    public void setMoneyInAccount(int moneyInAccount) {
+    public void setMoneyInAccount(double moneyInAccount) {
         this.moneyInAccount = moneyInAccount;
     }
 
@@ -82,11 +108,11 @@ public class Account  implements AccountCreater {
         this.creditTerm = creditTerm;
     }
 
-    public int getPayment() {
+    public double getPayment() {
         return payment;
     }
 
-    public void setPayment(int payment) {
+    public void setPayment(double payment) {
         this.payment = payment;
     }
 
@@ -114,6 +140,14 @@ public class Account  implements AccountCreater {
         this.pin = pin;
     }
 
+    public boolean isLock() {
+        return lock;
+    }
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -134,4 +168,6 @@ public class Account  implements AccountCreater {
     public Account create(Bank bank, Client client, int creditTerm, String pin, String level) {
         return null;
     }
+
+
 }

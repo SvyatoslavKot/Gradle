@@ -90,7 +90,7 @@ public class ReaderCredit {
     }
     private void readAmount(String s, Credit credit) {
         if ( s!= null && s.contains("amount:")){
-            credit.setAmount(Integer.parseInt(s.split(":")[1]));
+            credit.setAmount(Double.parseDouble(s.split(":")[1]));
         }
     }
     private void readPtc(String s, Credit credit) {

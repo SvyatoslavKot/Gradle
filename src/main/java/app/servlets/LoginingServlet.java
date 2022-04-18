@@ -46,8 +46,9 @@ public class LoginingServlet extends HttpServlet {
         // отправил атрибут на страницу с именем банк
         ServletContext servletContext = getServletContext();
         servletContext.setAttribute("bank", bank);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/logining.jsp");
-        requestDispatcher.forward(req, resp);
+
+           RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/logining.jsp");
+          requestDispatcher.forward(req, resp);
     }
     /**
      * метод обрабатывает POST запросы
@@ -73,12 +74,15 @@ public class LoginingServlet extends HttpServlet {
                 if (client!=null){
                     HttpSession session = req.getSession();
                     session.setAttribute("client" , client);
-                    resp.sendRedirect("/bank_app/main");
+                  resp.sendRedirect("/bank_app/main");
                 }else {
                     System.out.println("jj");
                     doGet(req, resp);
                 }
         }else doGet(req, resp);
     }
+      
+     String al = req.getHeader("Accept-Language");
+        System.out.println(al);
 }
 }

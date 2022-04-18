@@ -1,16 +1,10 @@
 package app.bankApp.exeption;
 
+import app.entities.Credit;
+
 public class CreditExeption extends Exception{
-
-        int balace;
-
-        public CreditExeption(String message, int balace) {
+        public CreditExeption(String message, Credit credit, double pay) {
             super(message);
-            this.balace = balace;
+            credit.setMoney(credit.getAmount());
         }
-
-    @Override
-    public String getMessage() {
-        return super.getMessage();
-    }
 }

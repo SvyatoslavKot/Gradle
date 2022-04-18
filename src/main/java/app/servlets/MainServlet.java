@@ -4,6 +4,7 @@ import app.bankApp.Bank;
 import app.bankApp.DBtextformat.ReadClient;
 import app.entities.Client;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,6 +23,13 @@ public class MainServlet extends HttpServlet {
     final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
     ReadClient readClient = ReadClient.getInstance();
     Bank bank = Bank.getInstance();
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        readClient.readBD(bank);
+    }
+
     /**
      * метод обрабатывает GET запросы
      * @param req

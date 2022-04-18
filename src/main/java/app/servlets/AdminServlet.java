@@ -8,6 +8,7 @@ import app.entities.Account;
 import app.entities.Client;
 import app.entities.Credit;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,14 +30,19 @@ public class AdminServlet extends HttpServlet {
     ReaderCredit readerCredit = ReaderCredit.getInstance();
     ReadAccount readAccount = ReadAccount.getInstance();
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        readAccount.readBD(bank);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         resp.setCharacterEncoding("UTF-8");
+        // resp.setContentType("UTF-8");
         readClient.readBD(bank);
         readerCredit.readBD(bank);
-        readAccount.readBD(bank);
+
         HashMap<String, Client> clientList = bank.getBankCollection().getClientHashMap();
         ArrayList<Credit> credits  = bank.getBankCollection().getCreditListOfBank();
         ArrayList<Account> accounts = bank.getBankCollection().getAccountList();

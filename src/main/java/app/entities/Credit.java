@@ -9,10 +9,10 @@ import app.bankApp.serviceBank.GenerateAccountNumber;
  * class Credit implements
  * @see CreditCreater
  */
-public class Credit implements CreditCreater{
+public class Credit implements Product, CreditCreater{
     private String creditName ;
     private String accountNumber ;
-    private int amount ;
+    private double amount ;
     private double ptc ;
     private String openingDate;
     private int creditTerm;
@@ -57,74 +57,59 @@ public class Credit implements CreditCreater{
     public Credit create(Bank bank, Client client, int sum, int creditTerm) {
         return null;
     }
-    /**
-     *
-     * @return creditName
-     */
+    @Override
+    public boolean reName(String name) {
+        if (!name.equals(" ")){
+            this.setCreditName(name);
+            return true;
+        }
+        else return false;
+    }
+
+    @Override
+    public boolean setMoney(double money) {
+        double balance;
+        balance = this.getAmount() - money;
+        this.setAmount(balance);
+        return true;
+    }
+
+    @Override
+    public boolean getMoney(double money) {
+        return false;
+    }
     public String getCreditName() {
         return creditName;
     }
 
-    /**
-     *
-     * @param creditName
-     */
     public void setCreditName(String creditName) {
         this.creditName = creditName;
     }
 
-    /**
-     *
-     * @return accountNumber
-     */
     public String getAccountNumber() {
         return accountNumber;
     }
 
-    /**
-     *
-     * @param accountNumber
-     */
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    /**
-     *
-     * @return amount
-     */
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    /**
-     *
-     * @param amount
-     */
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    /**
-     *
-     * @return ptc
-     */
     public double getPtc() {
         return ptc;
     }
 
-    /**
-     *
-     * @param ptc
-     */
     public void setPtc(double ptc) {
         this.ptc = ptc;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getOpeningDate() {
         return openingDate;
     }
@@ -170,5 +155,6 @@ public class Credit implements CreditCreater{
                 ", idHolder='" + idHolder + '\'' +
                 '}';
     }
+
 
 }
