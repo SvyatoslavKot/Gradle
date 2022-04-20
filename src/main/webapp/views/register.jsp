@@ -8,7 +8,6 @@
     <meta http-equiv="Content-Type" charset="UTF-8" content="text/html; charset=UTF-8" />
 </head>
 
-<jsp:include page="/views/include/header.jsp"/>
 <body>
 <div>
     <div>

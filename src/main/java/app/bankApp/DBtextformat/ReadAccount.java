@@ -32,12 +32,9 @@ public class ReadAccount {
             while (null != (currentLine = br.readLine())) {
                 account = convertStringToCredit(currentLine);
                 Client client = bank.getBankCollection().getClientHashMap().get(account.getIdHolder());
-                client.getAccountListPersn().add(account);
-                accounts.add(account);
+               // client.getAccountListPersn().add(account);
+                bank.getBankCollection().getAccountList().add(account);
             }
-            bank.getBankCollection().getAccountList().clear();
-            bank.getBankCollection().getAccountList().addAll(accounts);
-            accounts.clear();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

@@ -1,5 +1,8 @@
 package app.servlets.bankServiceServlet;
 
+import app.entities.Client;
+import app.servlets.HtmlPage;
+import app.servlets.include.NavBarServlet;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,10 +15,28 @@ import java.io.IOException;
 
 @WebServlet("/bank_app/payment/taransit/main")
 public class TransitMainServlet extends HttpServlet {
+    NavBarServlet navBar = new NavBarServlet();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/bankServiceViews/transitMainView.jsp");
-        requestDispatcher.forward(req,resp);
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=utf-8");
+        HttpSession session = req.getSession();
+
+        resp.getWriter().append(HtmlPage.START.getHtmlElement());
+        navBar.navbar(resp,req);
+
+            resp.getWriter().append("<div>\n" +
+                    "    <form method=\"post\">\n" +
+                    "        <button  type=\"submit\" name=\"ourSelf\">Между своими счетами</button>\n" +
+                    "        <br/>\n" +
+                    "        <button type=\"submit\" name=\"clientBank\">Клиенту Банка</button>\n" +
+                    "        <br/>\n" +
+                    "        <button type=\"submit\" name=\"clientOtherBank\">Клиенту другого банка</button>\n" +
+                    "    </form>\n" +
+                    "</div>");
+
+        resp.getWriter().append(HtmlPage.END.getHtmlElement());
     }
 
     @Override

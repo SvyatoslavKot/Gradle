@@ -2,7 +2,9 @@ package app.servlets;
 
 import app.bankApp.serviceBank.PasswordCheck;
 import app.entities.Client;
+import app.servlets.include.NavBarServlet;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,59 +25,55 @@ import java.io.IOException;
 
 @WebServlet("/bank_app/profileview")
 public class ProfileServlet extends HttpServlet {
-
+    NavBarServlet navBar = new NavBarServlet();
     String nickName;
     String password;
     PasswordCheck passwordCheck = new PasswordCheck();
-     /**
-     * обрабатывает GET запросы со страницы '/profileview'
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
+    Client client;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        ServletContext servletContext = getServletContext();
-        Client client = (Client) servletContext.getAttribute("client");
-        System.out.println(client);
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=utf-8");
+        HttpSession session = req.getSession();
+        client = (Client) session.getAttribute("client");
+        resp.getWriter().append(HtmlPage.START.htmlElement);
+        navBar.navbar(resp,req);
+        resp.getWriter().append("" +
+                "<h4>Окно Профиля</h4> <div>" +
+                "Имя: " + client.getUserName() +"<br>" +
+                "Фамилия: " + client.getLastName() +"<br>" +
+                "Login: " + client.getNickName() +"<br>" +
+                "Id: "+ client.getId() + "<br></div>" +
+                "<br/>\n" +
+                "            <button onclick=location.href='/bank_app/profile/credit' >Кредиты</button><br/>\n" +
+                "        <br/>\n" +
+                "            <button onclick=location.href='/bank_app/profile/account'>Счета</button><br/>\n" +
+                "        <br/>\n" +
+                "            <button onclick=location.href='/bank_app/profileview'>Страховки</button><br/>\n" +
+                "        <br/>\n" +
+                "            <button onclick=location.href='/bank_app/main/payment'>Платежи</button><br/>\n" +
+                "        <br/>\n" +
+                "        <form method=\"post\">\n" +
+                "            <button name=\"exit\" type=\"submit\">Выйти</button>\n" +
+                "        </form>\n" +
+                "    </div>");
 
-        req.setAttribute("client" , client);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/profileViews/profileview.jsp");
-        requestDispatcher.forward(req, resp);
+        resp.getWriter().append(HtmlPage.END.htmlElement);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-
         HttpSession session = req.getSession();
-        Client client = (Client) session.getAttribute("client");
-        //получает значение с параметром "name"
-        nickName = req.getParameter("name");
-        //получает значение с параметром "pass"
-        password = req.getParameter("pass");
-        //цикл который получает параметр кнопок из request
-        if (req.getParameter("exit")!= null){
+        if (req.getParameter("exit")!= null) {
             session.removeAttribute("client");
             resp.sendRedirect("/bank_app/main");
-        }else if (req.getParameter("register")!= null){
-            // отправляет клиента на страницу /register
-            resp.sendRedirect("/bank_app/register" );
-        }else if (req.getParameter("enter")!= null){
-
-            if (!nickName.isEmpty() && !password.isEmpty()){
-                //отправляет клиента на страницу "/profileview" , если поля заполнены
-                client = passwordCheck.chekPassword(nickName, password);
-                if (client!=null){
-                    System.out.println(client);
-                    session.setAttribute("client" , client);
-                    resp.sendRedirect("/bank_app/main");
-                }else {
-                    doGet(req, resp);
-                }
-            }else doGet(req, resp);
         }
     }
 }

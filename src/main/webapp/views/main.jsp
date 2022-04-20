@@ -12,7 +12,7 @@
     <title>Главноая</title>
 </head>
 
-<jsp:include page="/views/include/header.jsp"/>
+
 
 <body>
 <div>

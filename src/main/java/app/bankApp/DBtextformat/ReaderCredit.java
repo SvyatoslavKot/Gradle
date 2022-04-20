@@ -32,11 +32,8 @@ public class ReaderCredit {
                 credit = convertStringToCredit(currentLine);
                 Client client = bank.getBankCollection().getClientHashMap().get(credit.getIdHolder());
                 client.getCreditListPersn().add(credit);
-                credits.add(credit);
+                bank.getBankCollection().getCreditListOfBank().add(credit);
             }
-            bank.getBankCollection().getCreditListOfBank().clear();
-            bank.getBankCollection().getCreditListOfBank().addAll(credits);
-            credits.clear();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

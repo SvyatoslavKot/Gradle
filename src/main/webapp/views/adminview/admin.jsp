@@ -17,7 +17,7 @@
     <meta charset="utf-8">
 </head>
 <body>
-<table border="1" >
+<table border="1"  >
     <h4>Таблица всех клиентов</h4>
     <tr>
         <td>Name</td>
@@ -30,7 +30,7 @@
 <c:forEach items="${clientMap}" var="clientsMap">
     <option ${clientAdm =clientsMap.value}>
                 <tr>
-                    <td>${clientAdm.userName}</td>
+                    <td width="">${clientAdm.userName}</td>
                     <td>${clientAdm.lastName}</td>
                     <td>${clientAdm.nickName}</td>
                     <td>${clientAdm.id}</td>

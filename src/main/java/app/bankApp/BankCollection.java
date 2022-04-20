@@ -17,9 +17,9 @@ public class BankCollection {
     /**
      * collection for storing a list of All credits
      */
-    private ArrayList<Credit> creditListOfBank = new ArrayList<>();
+    private HashSet<Credit> creditListOfBank = new HashSet<>();
 
-    private ArrayList<Account> accountListOfBank = new ArrayList<>();
+    private HashSet<Account> accountListOfBank = new HashSet<>();
 
     /**
      * @return clientHashMap
@@ -32,11 +32,11 @@ public class BankCollection {
      *
      * @return creditList
      */
-    public ArrayList<Credit> getCreditListOfBank() {
+    public HashSet<Credit> getCreditListOfBank() {
         return creditListOfBank;
     }
 
-    public ArrayList<Account> getAccountList() {
+    public HashSet<Account> getAccountList() {
         return accountListOfBank;
     }
 }

@@ -7,6 +7,7 @@ import app.entities.Credit;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class WriteAccount {
     private static WriteAccount writeAccount;
@@ -26,7 +27,7 @@ public class WriteAccount {
             FileOutputStream os = new FileOutputStream(file);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os));
             bufferedWriter.write("");
-            ArrayList<Account> accounts = bank.getBankCollection().getAccountList();
+            HashSet<Account> accounts = bank.getBankCollection().getAccountList();
             for (Account account : accounts) {
                 bufferedWriter.write("nameAccount:" + account.getNameAccount() + " ");
                 bufferedWriter.write("accountNumber:" + account.getAccountNumber() + " ");

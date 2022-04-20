@@ -28,7 +28,7 @@ public class WriteCredit {
             FileOutputStream os = new FileOutputStream(file);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os));
             bufferedWriter.write("");
-            ArrayList<Credit> credits = bank.getBankCollection().getCreditListOfBank();
+            HashSet<Credit> credits = bank.getBankCollection().getCreditListOfBank();
             for (Credit credit : credits) {
                 bufferedWriter.write("creditName:" + credit.getCreditName() + " ");
                 bufferedWriter.write("accountNumber:" + credit.getAccountNumber() + " ");

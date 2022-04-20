@@ -1,13 +1,11 @@
 package app.servlets;
 
 import app.bankApp.Bank;
-import app.bankApp.DBtextformat.ReadAccount;
 import app.bankApp.DBtextformat.ReadClient;
-import app.bankApp.DBtextformat.ReaderCredit;
 import app.bankApp.serviceBank.PasswordCheck;
 import app.entities.Client;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
+import app.servlets.include.NavBarServlet;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,37 +16,31 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 @WebServlet("/bank_app/logining")
 public class LoginingServlet extends HttpServlet {
-    final static String TEXT = "Заполните поля 'имя' и 'пароль'!";
-    Client client = new Client();
+    Bank bank = Bank.getInstance();
+    NavBarServlet navBar = new NavBarServlet();
     ReadClient readClient = ReadClient.getInstance();
-    ReaderCredit readerCredit = ReaderCredit.getInstance();
-    ReadAccount readAccount = ReadAccount.getInstance();
     PasswordCheck passwordCheck = new PasswordCheck();
     String nickName;
     String password;
-    String a = "Заполни форму";
-    String b = "Здравстуйте";
-    /**
-     * метод обрабатывает GET запросы
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
+    String errorTextLogin = "";
+    String errorTextPass= "";
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        readClient.readBD(bank);
+    }
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        // отправляет в запрос на страницу main.jsp
-        Bank bank = Bank.getInstance();
-        readClient.readBD(bank);
-        readerCredit.readBD(bank);
-        readAccount.readBD(bank);
-        // отправил атрибут на страницу с именем банк
-        ServletContext servletContext = getServletContext();
-        servletContext.setAttribute("bank", bank);
-
-           RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/logining.jsp");
-          requestDispatcher.forward(req, resp);
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=utf-8");
+        resp.getWriter().append(HtmlPage.START.htmlElement);
+        navBar.navbar(resp,req);
+        resp.getWriter().append("<p>Здравствуйте заполните форму</p>");
+        formLogin(req,resp);
+        resp.getWriter().append(HtmlPage.END.htmlElement);
     }
     /**
      * метод обрабатывает POST запросы
@@ -60,6 +52,7 @@ public class LoginingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=utf-8");
         //получает значение с параметром "name"
         nickName = req.getParameter("name");
         //получает значение с параметром "pass"
@@ -69,20 +62,44 @@ public class LoginingServlet extends HttpServlet {
             // отправляет клиента на страницу /register
             resp.sendRedirect("/bank_app/register" );
         }else if (req.getParameter("enter")!= null){
-            if (!nickName.isEmpty() && !password.isEmpty()){
+            if(nickName.isEmpty()){
+                errorTextLogin = "введите имя!";
+                doGet(req, resp);
+            }else {
+                errorTextLogin = "";
+            }
+            if (password.isEmpty()){
+                errorTextPass = "введите пароль";
+                doGet(req, resp);
+            }else {
+                errorTextPass = "";
+            }
+            if (!nickName.isEmpty()&& !password.isEmpty()){
                 Client client = passwordCheck.chekPassword(nickName,password);
                 if (client!=null){
                     HttpSession session = req.getSession();
                     session.setAttribute("client" , client);
-                  resp.sendRedirect("/bank_app/main");
+                    resp.sendRedirect("/bank_app/main");
                 }else {
-                    System.out.println("jj");
+                    errorTextPass = "  неправильный пароль";
                     doGet(req, resp);
                 }
-        }else doGet(req, resp);
+            }
     }
       
      String al = req.getHeader("Accept-Language");
         System.out.println(al);
 }
+private void formLogin(HttpServletRequest req,HttpServletResponse resp) throws IOException {
+    resp.getWriter().append(
+            "<form method='post'>" +
+                    "            <label>Name:<br />" +
+                    "                <input type='text' name='name'>"+errorTextLogin +"<br />" +
+                    "            </label>" +
+                    "            <label>Password:<br />" +
+                    "                <input type='password' name='pass'>"+errorTextPass +"<br />" +
+                    "            </label>" +
+                    "            <button  name='enter' type='submit'>Submit</button>" +
+                    "            <button name='register' type='submit'>register</button> </form>"
+    );}
 }

@@ -10,7 +10,7 @@
     <title>Профиль</title>
 </head>
 <body>
-<jsp:include page="/views/include/header.jsp"/>
+
 <%if (session.getAttribute("client")!= null  ) {%>
 <div>
     <h3>Окно профиля</h3>
