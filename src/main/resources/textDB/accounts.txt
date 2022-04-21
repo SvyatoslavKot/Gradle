@@ -1,3 +1,4 @@
-nameAccount:Standard_account_Standard accountNumber:1338199162690007 moneyInAccount:0 term:12 payment:350 cashBack:4.5 idHolder:hh pin:000 
-nameAccount:Currency_account_Gold accountNumber:1338751241260007 moneyInAccount:0 term:36 payment:880 cashBack:0.0 idHolder:hh pin:000 
-nameAccount:Currency_account_Gold accountNumber:133841738090007 moneyInAccount:0 term:12 payment:880 cashBack:0.0 idHolder:hh pin:000 
+nameAccount:Currency_account_Gold accountNumber:133841738090007 moneyInAccount:1000.0 term:12 payment:880.0 cashBack:0.0 idHolder:hh pin:000 
+nameAccount:Currency_account_Gold accountNumber:1338751241260007 moneyInAccount:1000.0 term:36 payment:880.0 cashBack:0.0 idHolder:hh pin:000 
+nameAccount:Standard_account_Standard accountNumber:1338199162690007 moneyInAccount:1000.0 term:12 payment:350.0 cashBack:4.5 idHolder:hh pin:000 
+nameAccount:Premium_account_Standard accountNumber:1338273220600001 moneyInAccount:0.0 term:24 payment:1500.0 cashBack:9.5 idHolder:Ivan2000 pin:000 

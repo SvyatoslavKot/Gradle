@@ -28,14 +28,14 @@ public class Credit implements Product, CreditCreater{
      * Constructor create Credit class accepts all parameters except accountNumber,openingDate,paymentMonth
      * accountNumber created inside the this constructor with class {@link GenerateAccountNumber#accountNumber(int)}
      * param openingDate created default
-     * param paymentMonth created inside with class {@link CreditCalculationPayment#calc(int, double, int)} which used parameters constructor
+     * param paymentMonth created inside with class {@link CreditCalculationPayment#calc(double, double, int)}  which used parameters constructor
      * @param idHolder
      * @param creditName
      * @param amount
      * @param ptc
      * @param creditTerm
      */
-    public Credit(Bank bank, String idHolder, String creditName, int amount, double ptc, int creditTerm) {
+    public Credit(Bank bank, String idHolder, String creditName, double amount, double ptc, int creditTerm) {
         this.creditName = creditName;
         this.accountNumber = genNum.accountNumber(bank.getBankCollection().getCreditListOfBank().size());
         this.amount = amount;
@@ -54,7 +54,7 @@ public class Credit implements Product, CreditCreater{
      * @param creditTerm
      */
     @Override
-    public Credit create(Bank bank, Client client, int sum, int creditTerm) {
+    public Credit create(Bank bank, Client client, double sum, int creditTerm) {
         return null;
     }
     @Override

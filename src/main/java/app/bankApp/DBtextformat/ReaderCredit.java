@@ -25,13 +25,15 @@ public class ReaderCredit {
     private ArrayList<Credit> credits  = new ArrayList<>();
 
     public  void readBD (Bank bank){
+        if(bank.getBankCollection().getCreditListOfBank()!=null){
+            bank.getBankCollection().getCreditListOfBank().clear();}
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path),"UTF-8"));
             String currentLine = " ";
             while (null != (currentLine = br.readLine())) {
                 credit = convertStringToCredit(currentLine);
                 Client client = bank.getBankCollection().getClientHashMap().get(credit.getIdHolder());
-                client.getCreditListPersn().add(credit);
+                //client.getCreditListPersn().add(credit);
                 bank.getBankCollection().getCreditListOfBank().add(credit);
             }
         } catch (FileNotFoundException ex) {

@@ -13,8 +13,8 @@ public class CreditCard extends Credit {
     CreditCalculationPayment creditPayment = new CreditCalculationPayment();
 
     /**
-     * method interface of {@link CreditCreater#create(Bank, Client, int, int)}
-     * credit object creation cycle , used constructor {@link Credit#Credit(Bank, String, String, int, double, int)}
+     * method interface of {@link CreditCreater#create(Bank, Client, double, int)}
+     * credit object creation cycle , used constructor {@link Credit#Credit(Bank, String, String, double, double, int)}
      * @see CreditCreater
      * @see Credit
      * @param bank
@@ -24,7 +24,7 @@ public class CreditCard extends Credit {
      * @return Credit
      */
     @Override
-    public Credit create(Bank bank, Client client, int sum, int creditTerm) {
+    public Credit create(Bank bank, Client client, double sum, int creditTerm) {
         if (sum <= 30000 && sum >=10000 && creditTerm <= 6){
             return new Credit(bank,client.getNickName(),TypeOfCredit.CREDITCARD.type + "_1",  sum,41.9,creditTerm);
         }else if (sum <= 30000 && creditTerm > 6){

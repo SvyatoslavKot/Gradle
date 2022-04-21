@@ -79,7 +79,7 @@ public class LoginingServlet extends HttpServlet {
                 if (client!=null){
                     HttpSession session = req.getSession();
                     session.setAttribute("client" , client);
-                    resp.sendRedirect("/bank_app/main");
+                    resp.sendRedirect("/bank_app/main2");
                 }else {
                     errorTextPass = "  неправильный пароль";
                     doGet(req, resp);

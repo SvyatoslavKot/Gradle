@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="/views/include/header.jsp"/>
+
 
 <h2>Форма для рассчета кредита</h2>
 <form method="post">
@@ -61,6 +61,6 @@
             }
         }
     %>  </p>
-<jsp:include page="/views/include/footer.jsp"/>
+
 </body>
 </html>

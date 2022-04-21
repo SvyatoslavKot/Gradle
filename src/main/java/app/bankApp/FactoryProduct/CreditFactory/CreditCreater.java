@@ -5,5 +5,5 @@ import app.entities.Client;
 import app.entities.Credit;
 
 public interface CreditCreater {
-    Credit create(Bank bank, Client client, int sum, int creditTerm);
+    Credit create(Bank bank, Client client,double sum, int creditTerm);
 }

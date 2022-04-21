@@ -52,8 +52,6 @@ public class AdminServlet extends HttpServlet {
         ArrayList<Credit> credits = serisCredit.getAllCredits();
         ArrayList<Account> accounts = servisAccount.getAllAccounts();
 
-
-
         headerServlet.navbar(resp,req);
         resp.getWriter().append("<br><h4>Окно администратора</h4><br>"+
                 "<p>Выберите список: </p>"+
@@ -122,11 +120,11 @@ public class AdminServlet extends HttpServlet {
                                 "                <tr>\n" +
                                 "                    <td width=\"150\">"+credit.getCreditName()+"</td>\n" +
                                 "                    <td width=\"150\">"+credit.getAccountNumber()+"</td>\n" +
-                                "                    <td width=\"150\">"+credit.getAmount()+"</td>\n" +
+                                "                    <td width=\"150\">"+String.format("%.2f",credit.getAmount())+"</td>\n" +
                                 "                    <td width=\"150\">"+credit.getPtc()+"</td>\n" +
                                 "                    <td width=\"150\">"+credit.getOpeningDate()+"</td>\n" +
                                 "                    <td width=\"150\">"+credit.getCreditTerm()+"</td>\n" +
-                                "                    <td width=\"150\">"+credit.getPaymentMonth()+"</td>\n" +
+                                "                    <td width=\"150\">" +String.format("%.2f",credit.getPaymentMonth())+"</td>\n" +
                                 "                    <td width=\"150\">"+credit.getIdHolder()+"</td>\n" +
 
                                 "                </tr>\n" +
@@ -157,7 +155,7 @@ public class AdminServlet extends HttpServlet {
                                 "                <tr>\n" +
                                 "                    <td width=\"180\">"+account.getNameAccount()+"</td>\n" +
                                 "                    <td width=\"150\">"+account.getAccountNumber()+"</td>\n" +
-                                "                    <td width=\"150\">"+account.getMoneyInAccount()+"</td>\n" +
+                                "                    <td width=\"150\">" +String.format("%.2f",account.getMoneyInAccount())+"</td>\n" +
                                 "                    <td width=\"150\">"+account.getCreditTerm()+"</td>\n" +
                                 "                    <td width=\"150\">"+account.getPayment()+"</td>\n" +
                                 "                    <td width=\"150\">"+account.getCashBack()+"</td>\n" +

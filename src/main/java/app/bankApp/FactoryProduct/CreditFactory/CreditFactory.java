@@ -18,7 +18,7 @@ public class CreditFactory {
      * @param creditTerm
      * @return Credit
      */
-    public Credit createCredit (Bank bank, Client client, int sum, String type, int creditTerm){
+    public Credit createCredit (Bank bank, Client client, double sum, String type, int creditTerm){
         switch (type) {
             case "AVTO" : return new AvtoCredit().create(bank,client,sum,creditTerm);
             case "CONSUMER" : return new ConsumerCredit().create(bank,client,sum,creditTerm);

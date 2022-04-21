@@ -26,6 +26,10 @@ public class ReadAccount {
     private ArrayList<Account> accounts  = new ArrayList<>();
 
     public  void readBD (Bank bank){
+        if (bank.getBankCollection().getAccountList()!= null){
+            bank.getBankCollection().getAccountList().clear();
+        }
+
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path),"UTF-8"));
             String currentLine = " ";
@@ -66,7 +70,7 @@ public class ReadAccount {
 
     private void readPayment(String s, Account account) {
         if (s!= null && s.contains("payment:")){
-            account.setPayment(Integer.parseInt(s.split(":")[1]));
+            account.setPayment(Double.parseDouble(s.split(":")[1]));
         }
     }
 
@@ -88,7 +92,7 @@ public class ReadAccount {
     }
     private void readMoneyInAcc(String s, Account account) {
         if ( s!= null && s.contains("moneyInAccount:")){
-           account.setMoneyInAccount(Integer.parseInt(s.split(":")[1]));
+           account.setMoneyInAccount(Double.parseDouble(s.split(":")[1]));
         }
     }
     private void readCashBack(String s, Account account) {

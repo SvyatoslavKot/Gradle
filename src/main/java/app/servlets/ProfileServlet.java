@@ -73,7 +73,7 @@ public class ProfileServlet extends HttpServlet {
         HttpSession session = req.getSession();
         if (req.getParameter("exit")!= null) {
             session.removeAttribute("client");
-            resp.sendRedirect("/bank_app/main");
+            resp.sendRedirect("/bank_app/main2");
         }
     }
 }

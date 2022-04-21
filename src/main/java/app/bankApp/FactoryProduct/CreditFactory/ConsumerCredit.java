@@ -17,8 +17,8 @@ public class ConsumerCredit extends Credit {
     CreditCalculationPayment creditPayment = new CreditCalculationPayment();
 
     /**
-     * method interface of {@link CreditCreater#create(Bank, Client, int, int)}
-     * credit object creation, used constructor {@link Credit#Credit(Bank, String, String, int, double, int)}
+     * method interface of {@link CreditCreater#create(Bank, Client, double, int)}
+     * credit object creation, used constructor {@link Credit#Credit(Bank, String, String, double, double, int)}
      * @see CreditCreater
      * @see Credit
      * @param bank
@@ -28,7 +28,7 @@ public class ConsumerCredit extends Credit {
      * @return Credit
      */
     @Override
-    public Credit create(Bank bank, Client client, int sum, int creditTerm) {
+    public Credit create(Bank bank, Client client, double sum, int creditTerm) {
         if (sum <= 100000){
             CreditCard creditCard = new CreditCard();
             return creditCard.create(bank, client, sum, creditTerm);

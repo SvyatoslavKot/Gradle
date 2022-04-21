@@ -8,7 +8,7 @@
     <title>AccountView</title>
 </head>
 <body>
-<jsp:include page="/views/include/header.jsp"/>
+
 <br/>
 <p><%
     if (request.getParameter("level")!=null
@@ -60,7 +60,7 @@
     <button name="enter"  type="submit">Рассчитать</button>
 
 </form>
-<jsp:include page="/views/include/footer.jsp"/>
+
 </body>
 </html>
 

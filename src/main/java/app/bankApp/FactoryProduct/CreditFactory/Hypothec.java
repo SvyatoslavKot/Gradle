@@ -9,8 +9,8 @@ import app.entities.Credit;
 public class Hypothec extends Credit {
 
     /**
-     * method interface of {@link CreditCreater#create(Bank, Client, int, int)}
-     * credit object creation cycle , used constructor {@link Credit#Credit(Bank, String, String, int, double, int)}
+     * method interface of {@link CreditCreater#create(Bank, Client, double, int)}
+     * credit object creation cycle , used constructor {@link Credit#Credit(Bank, String, String, double, double, int)}
      * @see CreditCreater
      * @see Credit
      * @param bank
@@ -20,7 +20,7 @@ public class Hypothec extends Credit {
      * @return Credit
      */
     @Override
-    public Credit create(Bank bank, Client client, int sum, int creditTerm) {
+    public Credit create(Bank bank, Client client, double sum, int creditTerm) {
         if (sum <= 300000){
             ConsumerCredit consumerCredit = new ConsumerCredit();
             return consumerCredit.create(bank,client,  sum,creditTerm);

@@ -8,7 +8,7 @@
     <title>AccountView</title>
 </head>
 <body>
-<jsp:include page="/views/include/header.jsp"/>
+
 <div>
     <div>
         <h2>Главная страница по работе со счетами</h2>
@@ -29,7 +29,7 @@
             <button name="cancel" type="submit">Назад</button> <br/>
         </form>
     </div>
-<jsp:include page="/views/include/footer.jsp"/>
+
 
 </div>
 

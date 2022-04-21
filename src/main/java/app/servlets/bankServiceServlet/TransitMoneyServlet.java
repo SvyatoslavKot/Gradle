@@ -59,7 +59,7 @@ public class TransitMoneyServlet extends HttpServlet {
                     "    <select name=\"account_1\">\n");
             for (Account account : accountsSender){
                 resp.getWriter().append(" <option value=\""+account.getAccountNumber()+"\">"+account.getAccountNumber()+"</option>\n");
-            }resp.getWriter().append("    </select>\n" );
+            }resp.getWriter().append("    </select>\n<br>" );
 
         if (session.getAttribute("typeTransit").equals("ourSelf")) {
                 accountsAddressee= serviceAccount.getAccountByClient(client);
@@ -69,15 +69,19 @@ public class TransitMoneyServlet extends HttpServlet {
                 for (Account account2 : accountsAddressee){
                     resp.getWriter().append(" <option value=\""+account2.getAccountNumber()+"\">"+account2.getAccountNumber()+"</option>\n");
                 }
-                resp.getWriter().append("    </select>\n" );
+                resp.getWriter().append("    </select>\n<br>" );
+
+            resp.getWriter().append("<br><label>Cумма перевода:<br><input type=\"text\" name=\"sum\"></label>\n" +
+                    "<button name=\"send\" type=\"submit\">Перевести</button>\n</form>");
+
             }
 
 
-            resp.getWriter().append("<label>Cумма перевода:<input type=\"text\" name=\"sum\"></label>\n" +
+        else if(session.getAttribute("typeTransit").equals("clientBank")){
+            resp.getWriter().append("<br><label>Счет зачисления:<br><input type=\"text\" name=\"account_2\"></label>\n");
+            resp.getWriter().append("<br><label>Cумма перевода:<br><input type=\"text\" name=\"sum\"></label>\n" +
                     "<button name=\"send\" type=\"submit\">Перевести</button>\n</form>");
-
-
-
+        }
         }
 
     }
@@ -106,19 +110,21 @@ public class TransitMoneyServlet extends HttpServlet {
             if (req.getParameter("sum")!=null && !req.getParameter("sum").isEmpty() &&
                     req.getParameter("account_1")!=null && !req.getParameter("account_1").isEmpty()&&
                     req.getParameter("account_2")!=null && !req.getParameter("account_2").isEmpty()){
+
                 double sum  = Double.parseDouble(req.getParameter("sum"));
                 Account accountSender = serviceAccount.getAccountByNum(req.getParameter("account_1"));
                 Account accountAddressee = serviceAccount.getAccountByNum(req.getParameter("account_2"));
                 if (accountSender!= null && accountAddressee !=null){
                     try {
-                        moneyOperation.AccountTransferMoney(accountSender,accountAddressee, sum);
-                        resp.sendRedirect("/bank_app/main/payment");
+                        if(moneyOperation.AccountTransferMoney(accountSender,accountAddressee, sum)){
+                            resp.sendRedirect("/bank_app/main/payment");
+                        }
                     } catch (AccountOperationExeption e) {
                         msgText = e.getMessage();
                         e.printStackTrace();
                         doGet(req, resp);
                     }
-                }else {  msgText = "неидефицирвал счета";
+                }else {  msgText = "не найдет счет";
                     doGet(req, resp);}
             }else {
                     msgText = "Заполните форму!";

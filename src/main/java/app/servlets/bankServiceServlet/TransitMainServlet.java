@@ -51,7 +51,7 @@ public class TransitMainServlet extends HttpServlet {
             resp.sendRedirect("/bank_app/payment/taransit");
         }else if (req.getParameter("clientOtherBank")!=null){
             session.setAttribute("typeTransit", "clientOtherBank");
-            resp.sendRedirect("/bank_app/payment/taransit");
+            resp.sendRedirect("/bank_app/payment/taransit/main");
         }
     }
 }

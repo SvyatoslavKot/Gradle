@@ -51,7 +51,7 @@ public class ProfileAccountView extends HttpServlet {
         HttpSession session = req.getSession();
         client = (Client) session.getAttribute("client");
         accounts = serviceAccount.getAccountByClient(client);
-
+            System.out.println(accounts.size());
         resp.getWriter().append(HtmlPage.START.getHtmlElement());
         navBar.navbar(resp,req);
         resp.getWriter().append("<form method=\"get\">\n" +
@@ -98,12 +98,13 @@ public class ProfileAccountView extends HttpServlet {
                         "           \n" +
                         "        </table>");
         for (Account account : sortList){
+            System.out.println(sortList.size());
             resp.getWriter().append(
                     "        <table border='1'>"+
                             "                <tr>\n" +
                             "                    <td width=\"180\">"+account.getNameAccount()+"</td>\n" +
                             "                    <td width=\"150\">"+account.getAccountNumber()+"</td>\n" +
-                            "                    <td width=\"150\">"+account.getMoneyInAccount()+"</td>\n" +
+                            "                    <td width=\"150\">"+String.format("%.2f",account.getMoneyInAccount())+"</td>\n" +
                             "                    <td width=\"150\">"+account.getCreditTerm()+"</td>\n" +
                             "                    <td width=\"150\">"+account.getPayment()+"</td>\n" +
                             "                    <td width=\"150\">"+account.getCashBack()+"</td>\n" +

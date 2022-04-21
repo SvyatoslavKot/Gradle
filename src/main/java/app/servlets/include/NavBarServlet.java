@@ -21,8 +21,8 @@ public class NavBarServlet extends HttpServlet {
 
                 "<button name=\"enter\"  type=\"submit\">ГЛАВНАЯ</button> "+
                 " <button onclick="+"location.href='/bank_app/credit/main'"+">Кредиты</button>"+
-                " <button onclick="+"location.href='/bank_app/account/main'"+">Кредиты</button>"+
-                " <button onclick="+"location.href='/bank_app/main/payment'"+">Кредиты</button>");
+                " <button onclick="+"location.href='/bank_app/account/main'"+">Счета</button>"+
+                " <button onclick="+"location.href='/bank_app/main/payment'"+">Платежи</button>");
 
         if (client!= null){
             resp.getWriter().append("<button onclick=location.href='/bank_app/profileview'>"+ client.getNickName() +"</button></nav> <br>" );
