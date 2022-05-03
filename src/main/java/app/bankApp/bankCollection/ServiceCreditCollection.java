@@ -30,7 +30,7 @@ public class ServiceCreditCollection {
         ArrayList<Credit> credits = new ArrayList<>(bank.getBankCollection().getCreditListOfBank());
         ArrayList<Credit> creditList = new ArrayList<>();
         for (Credit credit : credits){
-            if (credit.getIdHolder().equals(c.getNickName())){
+            if (credit.getPhoneHolder().equals(c.getMobilePhone())){
                 creditList.add(credit);
             }
         }return creditList;

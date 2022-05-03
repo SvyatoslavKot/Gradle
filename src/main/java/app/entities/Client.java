@@ -8,22 +8,14 @@ import java.util.*;
  * create Client
  * */
 public class Client implements Serializable {
+    private  String mobilePhone;
     private String userName;
     private String lastName;
     private String id;
     private String nickName;
     private String password;
-    /**
-     * HashSet contains the Credits Client
-     */
-    private Set<Credit> creditListPersn = new HashSet<>();
-    /**
-     * HashSet contains the Account Client
-     */
-    private Set<Account> accountListPersn = new HashSet<>();
 
-    /**
-     * default constructor
+     /** default constructor
      */
     public Client() {
     }
@@ -35,7 +27,8 @@ public class Client implements Serializable {
      * @param nickName
      * @param password
      */
-    public Client(String userName, String lastName, String id, String nickName, String password) {
+    public Client(String mobilePhone,String userName, String lastName, String id, String nickName, String password) {
+        this.mobilePhone = mobilePhone;
         this.userName = userName;
         this.lastName = lastName;
         this.id = id;
@@ -107,28 +100,20 @@ public class Client implements Serializable {
         return password;
     }
 
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+    }
+
     /**
      *
      * @param password
      */
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<Credit> getCreditListPersn() {
-        return creditListPersn;
-    }
-
-    public void setCreditListPersn(Set<Credit> creditListPersn) {
-        creditListPersn = creditListPersn;
-    }
-
-    public Set<Account> getAccountListPersn() {
-        return accountListPersn;
-    }
-
-    public void setAccountListPersn(Set<Account> accountListPersn) {
-        this.accountListPersn = accountListPersn;
     }
 
     @Override

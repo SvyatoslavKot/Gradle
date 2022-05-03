@@ -3,8 +3,12 @@ package app.servlets.profileView;
 import app.bankApp.Bank;
 import app.bankApp.DBtextformat.ReadClient;
 import app.bankApp.DBtextformat.ReaderCredit;
+import app.bankApp.DBtextformat.WriteCredit;
+import app.bankApp.bankCollection.ServiceBidCreditCollection;
 import app.bankApp.bankCollection.ServiceCreditCollection;
 import app.bankApp.bankCollection.SortCreditList;
+import app.bankApp.tasksAdmin.StatusBidCreditEnum;
+import app.entities.BidCredit;
 import app.entities.Client;
 import app.entities.Credit;
 import app.servlets.HtmlPage;
@@ -27,13 +31,17 @@ import java.util.Set;
 @WebServlet("/bank_app/profile/credit")
 public class ProfileCreditView extends HttpServlet {
     NavBarServlet navBar = new NavBarServlet();
-    Client client;
+
     ServiceCreditCollection seviceCredit = new ServiceCreditCollection();
-    Bank bank = Bank.getInstance();
+    ServiceBidCreditCollection serviceBid = new ServiceBidCreditCollection();
     ReaderCredit rc = ReaderCredit.getInstance();
+    WriteCredit wr = WriteCredit.getInstance();
+
+    Client client;
+    Bank bank = Bank.getInstance();
     SortCreditList sortCreditList = new SortCreditList();
-    ArrayList<Credit> sortList;
     ArrayList<Credit> credits;
+    ArrayList<BidCredit> bidCredits;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -45,11 +53,49 @@ public class ProfileCreditView extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
         HttpSession session = req.getSession();
+
+        if (req.getParameter("bidCreditRemove")!=null){
+            BidCredit bidCreditRemove = serviceBid.getNum(Integer.valueOf(req.getParameter("bidCreditRemove")));
+            serviceBid.removeBidCredit(bidCreditRemove);
+        }
+        if (req.getParameter("bidCreditAdd")!=null){
+            BidCredit bidCreditAdd = serviceBid.getNum(Integer.valueOf(req.getParameter("bidCreditAdd")));
+            seviceCredit.addCredit(bidCreditAdd.getCredit());
+            serviceBid.removeBidCredit(bidCreditAdd);
+            wr.writeCredit(Bank.getInstance());
+        }
         client = (Client) session.getAttribute("client");
         credits = seviceCredit.getAccountByClient(client);
+        bidCredits = serviceBid.getBiClient(client);
+
 
         resp.getWriter().append(HtmlPage.START.getHtmlElement());
         navBar.navbar(resp,req);
+        sortMenu(req, resp);
+
+        if (req.getParameter("sortButton")!= null){
+            if (req.getParameter("sortParam").equals("1")){
+                credits = (ArrayList<Credit>) sortCreditList.sortByAmountLow(credits);
+            }else if (req.getParameter("sortParam").equals("2")) {
+                credits = (ArrayList<Credit>) sortCreditList.sortByAmountHight(credits);
+            }else if (req.getParameter("sortParam").equals("3")) {
+                credits = (ArrayList<Credit>) sortCreditList.sortByName(credits);
+            }else if (req.getParameter("sortParam").equals("4")) {
+                credits = (ArrayList<Credit>) sortCreditList.sortByDate(credits);
+            }
+        }else {
+            credits = (ArrayList<Credit>) sortCreditList.sortByDate(credits);
+        }
+
+        creditTable(req,resp);
+
+        if (bidCredits.size()!=0){
+            creditBidTable(req, resp);
+        }
+        resp.getWriter().append(HtmlPage.END.getHtmlElement());
+    }
+
+    private void sortMenu(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.getWriter().append("<div>\n" +
                 "    <form method=\"get\">\n" +
                 "        <label>Сортировать</label>\n" +
@@ -62,24 +108,6 @@ public class ProfileCreditView extends HttpServlet {
                 "        <button name=\"sortButton\" type=\"submit\">Cортировать</button>\n" +
                 "    </form>\n" +
                 "</div>");
-        if (req.getParameter("sortButton")!= null){
-            if (req.getParameter("sortParam").equals("1")){
-                sortList = (ArrayList<Credit>) sortCreditList.sortByAmountLow(credits);
-                System.out.println(sortList.get(1));
-            }else if (req.getParameter("sortParam").equals("2")) {
-                sortList = (ArrayList<Credit>) sortCreditList.sortByAmountHight(credits);
-            }else if (req.getParameter("sortParam").equals("3")) {
-                sortList = (ArrayList<Credit>) sortCreditList.sortByName(credits);
-            }else if (req.getParameter("sortParam").equals("4")) {
-                sortList = (ArrayList<Credit>) sortCreditList.sortByDate(credits);
-            }
-        }else {
-            sortList = (ArrayList<Credit>) sortCreditList.sortByDate(credits);
-        }
-
-        creditTable(req,resp);
-        resp.getWriter().append(HtmlPage.END.getHtmlElement());
-
     }
 
     private void creditTable(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -94,13 +122,9 @@ public class ProfileCreditView extends HttpServlet {
                         "                    <td width=\"150\">Дата открытия</td>\n" +
                         "                    <td width=\"150\">Срок погашения</td>\n" +
                         "                    <td width=\"150\">Платёж</td>\n" +
-                        "                </tr>\n" +
-                        "           \n" +
-                        "        </table>");
-        for (Credit credit : sortList){
-            resp.getWriter().append(
-                    "        <table border='1'>"+
-                            "                <tr>\n" +
+                        "                </tr>\n");
+        for (Credit credit : credits){
+            resp.getWriter().append("                <tr>\n" +
                             "                    <td width=\"150\">"+credit.getCreditName()+"</td>\n" +
                             "                    <td width=\"150\">"+credit.getAccountNumber()+"</td>\n" +
                             "                    <td width=\"150\">"+credit.getAmount()+"</td>\n" +
@@ -108,11 +132,40 @@ public class ProfileCreditView extends HttpServlet {
                             "                    <td width=\"150\">"+credit.getOpeningDate()+"</td>\n" +
                             "                    <td width=\"150\">"+credit.getCreditTerm()+"</td>\n" +
                             "                    <td width=\"150\"><a href=''>" +String.format("%.2f", credit.getPaymentMonth())+"</a></td>\n"+
-                            "                </tr>\n" +
-                            "           \n" +
-                            "        </table>");
+                            "                </tr>\n");
+        }
+        resp.getWriter().append("        </table>");
+    }
+    private void creditBidTable(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.getWriter().append("<h4>Заявки</h4>" +
+                        "        <table border='1'>"+
+                        "                <tr>\n" +
+                        "                    <td width=\"150\">Номер Заявки</td>\n" +
+                        "                    <td width=\"150\">Название кредита</td>\n" +
+                        "                    <td width=\"150\">Сумма кредита</td>\n" +
+                        "                    <td width=\"150\">Проценты</td>\n" +
+                        "                    <td width=\"150\">Срок Кредита</td>\n" +
+                        "                    <td width=\"150\">Платёж</td>\n" +
+                        "                    <td width=\"150\">Статус</td>\n" +
+                        "                </tr>\n");
+        for (BidCredit bidCredit : bidCredits) {
+            resp.getWriter().append("                <tr>\n" +
+                            "                    <td width=\"150\">" + bidCredit.getNumBid() + "</td>\n" +
+                            "                    <td width=\"150\">" + bidCredit.getCredit().getCreditName() + "</td>\n" +
+                            "                    <td width=\"150\">" + bidCredit.getCredit().getAmount() + "</td>\n" +
+                            "                    <td width=\"150\">" + bidCredit.getCredit().getPtc() + "</td>\n" +
+                            "                    <td width=\"150\">" + bidCredit.getCredit().getCreditTerm() + "</td>\n" +
+                            "                    <td width=\"150\">" + String.format("%.2f",bidCredit.getCredit().getPaymentMonth()) + "</td>\n" +
+                            "                    <td width=\"150\">" + bidCredit.getStatus() + "</td>\n");
 
+            if(bidCredit.getStatus().equals(StatusBidCreditEnum.DENIED.status)){
+                 resp.getWriter().append("<td><button onclick=\"location.href=\'/bank_app/profile/credit?bidCreditRemove" +bidCredit.getNumBid()+ "\'\">OK</button></td>");}
+                     if (bidCredit.getStatus().equals(StatusBidCreditEnum.APPROVED.status)){
+                         resp.getWriter().append(
+                              "<td><button onclick=\"location.href='/bank_app/profile/credit?bidCreditRemove="+bidCredit.getNumBid()+"'\">отказаться</button></td>" +
+                              "<td><button onclick=\"location.href='/bank_app/profile/credit?bidCreditAdd="+bidCredit.getNumBid()+"'\">подтвердить</button></td>");}
+
+                     resp.getWriter().append("</tr> </table>");
         }
     }
-
 }

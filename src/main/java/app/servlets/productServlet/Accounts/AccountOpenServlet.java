@@ -1,4 +1,4 @@
-package app.servlets.productServlet;
+package app.servlets.productServlet.Accounts;
 
 import app.bankApp.Bank;
 import app.bankApp.DBtextformat.ReadAccount;

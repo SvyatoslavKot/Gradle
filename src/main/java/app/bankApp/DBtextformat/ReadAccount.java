@@ -35,7 +35,7 @@ public class ReadAccount {
             String currentLine = " ";
             while (null != (currentLine = br.readLine())) {
                 account = convertStringToCredit(currentLine);
-                Client client = bank.getBankCollection().getClientHashMap().get(account.getIdHolder());
+                Client client = bank.getBankCollection().getClientHashMap().get(account.getLoginHolder());
                // client.getAccountListPersn().add(account);
                 bank.getBankCollection().getAccountList().add(account);
             }
@@ -58,13 +58,14 @@ public class ReadAccount {
             readTerm(s,account);
             readPayment(s,account);
             readIdHolder(s,account);
+            readDate(s,account);
         }
         return account;
     }
 
     private void readIdHolder(String s, Account account) {
         if (s!= null && s.contains("idHolder:")){
-            account.setIdHolder(s.split(":")[1]);
+            account.setLoginHolder(s.split(":")[1]);
         }
     }
 
@@ -105,4 +106,10 @@ public class ReadAccount {
             account.setPin(s.split(":")[1]);
         }
     }
+    public  void readDate(String s, Account account){
+        if ( s!= null && s.contains("date:")){
+            account.setOpenDate(Long.parseLong(s.split(":")[1]));
+        }
+    }
+
 }

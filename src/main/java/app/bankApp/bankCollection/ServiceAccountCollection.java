@@ -29,7 +29,7 @@ public class ServiceAccountCollection {
         ArrayList<Account> listAccount = new ArrayList<>(bank.getBankCollection().getAccountList());
         ArrayList<Account> accontListClient = new ArrayList<>();
         for (Account account : listAccount){
-            if (account.getIdHolder().equals(c.getNickName())){
+            if (account.getLoginHolder().equals(c.getMobilePhone())){
                 accontListClient.add(account);
             }
         }return accontListClient;
@@ -45,9 +45,9 @@ public class ServiceAccountCollection {
     }
 
     public boolean removeAccount (Account account){
-        if (account.getMoneyInAccount() == 0){
+        //if (account.getMoneyInAccount() == 0){
                 bank.getBankCollection().getAccountList().remove(account);
                 return true;
-        }return false;
+       // }return false;
     }
 }

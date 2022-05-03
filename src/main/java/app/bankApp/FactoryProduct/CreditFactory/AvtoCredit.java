@@ -17,9 +17,8 @@ public class AvtoCredit extends Credit{
     CreditCalculationPayment creditPayment = new CreditCalculationPayment();
 
     /**
-     * method interface of {@link CreditCreater#create(Bank, Client, double, int)}
+     * method interface of {@link app.bankApp.FactoryProduct.Product#create(Bank, Client, double, int)}
      * credit object creation cycle , used constructor {@link Credit#Credit(Bank, String, String, double, double, int)}
-     * @see CreditCreater
      * @see Credit
      * @param bank
      * @param client
@@ -33,15 +32,15 @@ public class AvtoCredit extends Credit{
             ConsumerCredit consumerCredit = new ConsumerCredit();
             return consumerCredit.create(bank,client,  sum,creditTerm);
         }else if (sum > 300000 && sum <= 1000000 ){
-            return new Credit(bank,client.getNickName(),TypeOfCredit.AVTO.type + "_1",  sum,17.9,creditTerm);
+            return new Credit(bank,client.getMobilePhone(),TypeOfCredit.AVTO.type + "_1",  sum,17.9,creditTerm);
         }else if (sum > 1000000 && sum <= 1300000 ){
-            return new Credit(bank,client.getNickName(),TypeOfCredit.AVTO.type + "_2",  sum,15.9,creditTerm);
+            return new Credit(bank,client.getMobilePhone(),TypeOfCredit.AVTO.type + "_2",  sum,15.9,creditTerm);
         }else if (sum > 1300000 && sum <= 1700000 ){
-            return new Credit(bank,client.getNickName(),TypeOfCredit.AVTO.type + "_3",  sum,13.9,creditTerm);
+            return new Credit(bank,client.getMobilePhone(),TypeOfCredit.AVTO.type + "_3",  sum,13.9,creditTerm);
         }else if (sum > 1700000 && sum <= 2500000 ){
-            return new Credit(bank,client.getNickName(),TypeOfCredit.AVTO.type + "_4",  sum,12.9,creditTerm);
+            return new Credit(bank,client.getMobilePhone(),TypeOfCredit.AVTO.type + "_4",  sum,12.9,creditTerm);
         }else if (sum > 2500000 && sum <= 5000000 ){
-            return new Credit(bank,client.getNickName(),TypeOfCredit.AVTO.type + "_5",  sum,10.9,creditTerm);
+            return new Credit(bank,client.getMobilePhone(),TypeOfCredit.AVTO.type + "_5",  sum,10.9,creditTerm);
         }else {
             return null;
         }

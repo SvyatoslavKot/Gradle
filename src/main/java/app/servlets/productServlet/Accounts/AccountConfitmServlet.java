@@ -1,4 +1,4 @@
-package app.servlets.productServlet;
+package app.servlets.productServlet.Accounts;
 
 import app.bankApp.Bank;
 import app.bankApp.DBtextformat.WriteAccount;
@@ -55,11 +55,11 @@ public class AccountConfitmServlet extends HttpServlet {
             bank.getBankCollection().getAccountList().add(account);
             wa.writeAccount(bank);
             session.removeAttribute("accountCalk");
-            resp.sendRedirect("/bank_app/credit/main");
+            resp.sendRedirect("/bank_app/account/main");
         }
         if (req.getParameter("cancel")!=null){
             session.removeAttribute("creditCalck");
-            resp.sendRedirect("/bank_app/credit/main");
+            resp.sendRedirect("/bank_app/account/main");
         }
     }
     private void formConfAccount (HttpServletResponse resp) throws IOException {

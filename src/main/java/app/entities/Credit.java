@@ -1,15 +1,14 @@
 package app.entities;
 
 import app.bankApp.Bank;
-import app.bankApp.FactoryProduct.CreditFactory.CreditCreater;
+import app.bankApp.FactoryProduct.Product;
 import app.bankApp.serviceBank.CreditCalculationPayment;
 import app.bankApp.serviceBank.GenerateAccountNumber;
 
 /**
  * class Credit implements
- * @see CreditCreater
  */
-public class Credit implements Product, CreditCreater{
+public class Credit implements Product {
     private String creditName ;
     private String accountNumber ;
     private double amount ;
@@ -17,7 +16,7 @@ public class Credit implements Product, CreditCreater{
     private String openingDate;
     private int creditTerm;
     private double paymentMonth;
-    private String idHolder;
+    private String phoneHolder;
 
     GenerateAccountNumber genNum = new GenerateAccountNumber();
     CreditCalculationPayment creditPayment = new CreditCalculationPayment();
@@ -29,13 +28,13 @@ public class Credit implements Product, CreditCreater{
      * accountNumber created inside the this constructor with class {@link GenerateAccountNumber#accountNumber(int)}
      * param openingDate created default
      * param paymentMonth created inside with class {@link CreditCalculationPayment#calc(double, double, int)}  which used parameters constructor
-     * @param idHolder
+     * @param phoneHolder
      * @param creditName
      * @param amount
      * @param ptc
      * @param creditTerm
      */
-    public Credit(Bank bank, String idHolder, String creditName, double amount, double ptc, int creditTerm) {
+    public Credit(Bank bank, String phoneHolder, String creditName, double amount, double ptc, int creditTerm) {
         this.creditName = creditName;
         this.accountNumber = genNum.accountNumber(bank.getBankCollection().getCreditListOfBank().size());
         this.amount = amount;
@@ -43,11 +42,12 @@ public class Credit implements Product, CreditCreater{
         this.openingDate = "01.01.2020";
         this.creditTerm = creditTerm;
         this.paymentMonth = creditPayment.calc(amount,17.9,creditTerm);
-        this.idHolder = idHolder;
+        this.phoneHolder = phoneHolder;
     }
 
+
+
     /**
-     * @see CreditCreater
      * @param bank
      * @param client
      * @param sum
@@ -55,6 +55,10 @@ public class Credit implements Product, CreditCreater{
      */
     @Override
     public Credit create(Bank bank, Client client, double sum, int creditTerm) {
+        return null;
+    }
+    @Override
+    public Account create(Bank bank, Client client, int creditTerm, String pin, String level) {
         return null;
     }
     @Override
@@ -67,7 +71,7 @@ public class Credit implements Product, CreditCreater{
     }
 
     @Override
-    public boolean setMoney(double money) {
+    synchronized public boolean setMoney(double money) {
         double balance;
         balance = this.getAmount() - money;
         this.setAmount(balance);
@@ -75,9 +79,11 @@ public class Credit implements Product, CreditCreater{
     }
 
     @Override
-    public boolean getMoney(double money) {
+    synchronized public boolean getMoney(double money) {
         return false;
     }
+
+
     public String getCreditName() {
         return creditName;
     }
@@ -134,12 +140,12 @@ public class Credit implements Product, CreditCreater{
         this.paymentMonth = paymentMonth;
     }
 
-    public String getIdHolder() {
-        return idHolder;
+    public String getPhoneHolder() {
+        return phoneHolder;
     }
 
-    public void setIdHolder(String idHolder) {
-        this.idHolder = idHolder;
+    public void setPhoneHolder(String phoneHolder) {
+        this.phoneHolder = phoneHolder;
     }
 
     @Override
@@ -152,7 +158,7 @@ public class Credit implements Product, CreditCreater{
                 ", openingDate=" + openingDate +
                 ", creditTerm=" + creditTerm +
                 ", paymentMonth=" + paymentMonth +
-                ", idHolder='" + idHolder + '\'' +
+                ", idHolder='" + phoneHolder + '\'' +
                 '}';
     }
 

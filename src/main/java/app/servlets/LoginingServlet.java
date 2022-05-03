@@ -20,7 +20,7 @@ public class LoginingServlet extends HttpServlet {
     NavBarServlet navBar = new NavBarServlet();
     ReadClient readClient = ReadClient.getInstance();
     PasswordCheck passwordCheck = new PasswordCheck();
-    String nickName;
+    String phone;
     String password;
     String errorTextLogin = "";
     String errorTextPass= "";
@@ -54,7 +54,7 @@ public class LoginingServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
         //получает значение с параметром "name"
-        nickName = req.getParameter("name");
+        phone = req.getParameter("name");
         //получает значение с параметром "pass"
         password = req.getParameter("pass");
         //цикл который получает параметр кнопок из request
@@ -62,8 +62,8 @@ public class LoginingServlet extends HttpServlet {
             // отправляет клиента на страницу /register
             resp.sendRedirect("/bank_app/register" );
         }else if (req.getParameter("enter")!= null){
-            if(nickName.isEmpty()){
-                errorTextLogin = "введите имя!";
+            if(phone.isEmpty()){
+                errorTextLogin = "введите логин";
                 doGet(req, resp);
             }else {
                 errorTextLogin = "";
@@ -74,8 +74,8 @@ public class LoginingServlet extends HttpServlet {
             }else {
                 errorTextPass = "";
             }
-            if (!nickName.isEmpty()&& !password.isEmpty()){
-                Client client = passwordCheck.chekPassword(nickName,password);
+            if (!phone.isEmpty()&& !password.isEmpty()){
+                Client client = passwordCheck.chekPassword(phone,password);
                 if (client!=null){
                     HttpSession session = req.getSession();
                     session.setAttribute("client" , client);

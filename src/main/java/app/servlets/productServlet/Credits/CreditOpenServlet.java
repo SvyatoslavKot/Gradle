@@ -1,8 +1,13 @@
-package app.servlets.bankProductServlet;
+package app.servlets.productServlet.Credits;
 
 import app.bankApp.Bank;
 import app.bankApp.DBtextformat.ReaderCredit;
 import app.bankApp.FactoryProduct.CreditFactory.CreditFactory;
+import app.bankApp.bankCollection.ServiceBidCreditCollection;
+import app.bankApp.tasksAdmin.BlockingQueueTask;
+import app.bankApp.tasksAdmin.StatusBidCreditEnum;
+import app.bankApp.tasksAdmin.Task;
+import app.entities.BidCredit;
 import app.entities.Client;
 import app.entities.Credit;
 import app.servlets.HtmlPage;
@@ -22,6 +27,7 @@ import java.util.TreeSet;
 @WebServlet(value = "/bank_app/credit/open",  asyncSupported = true)
 public class CreditOpenServlet extends HttpServlet {
     NavBarServlet headerServlet = new NavBarServlet();
+    ServiceBidCreditCollection serviceBid = new ServiceBidCreditCollection();
     private String textMsg = "";
     private String textSum = "";
     private String textTerm = "";
@@ -30,6 +36,7 @@ public class CreditOpenServlet extends HttpServlet {
 
     private ReaderCredit rc = ReaderCredit.getInstance();
     Bank bank = Bank.getInstance();
+    BidCredit bidCredit;
     CreditFactory creditFactory = new CreditFactory();
     private Client client;
 
@@ -46,7 +53,11 @@ public class CreditOpenServlet extends HttpServlet {
 
         resp.getWriter().write(HtmlPage.START.getHtmlElement());
         headerServlet.navbar(resp,req);
-        formOpenCredit(resp);
+        if (req.getParameter("bidCredit")!= null){
+            formResult(resp,req);
+        }else {
+            formOpenCredit(resp);
+        }
         resp.getWriter().append(HtmlPage.END.getHtmlElement());
     }
 
@@ -56,7 +67,6 @@ public class CreditOpenServlet extends HttpServlet {
         if (req.getParameter("calck")!= null){
             if (req.getParameter("sum")== null || req.getParameter("sum").isEmpty()){
                 textSum = "Введите желаемую ссуму!";
-
             }else {textSum = "";}
             if (req.getParameter("term").equals("0")){
                 textTerm = "Выбирете срок!";
@@ -64,10 +74,16 @@ public class CreditOpenServlet extends HttpServlet {
             if (req.getParameter("type").equals("0")){
                 textType = "Выбирете тип";
             }else{textType = "";}
-
             if (req.getParameter("sum")!= null ||!req.getParameter("sum").isEmpty()
                     && req.getParameter("term")!=null || !req.getParameter("term").isEmpty()
-                    && req.getParameter("type")!=null|| !req.getParameter("type").isEmpty()){
+                    && req.getParameter("type")!=null|| !req.getParameter("type").isEmpty()
+                    && req.getParameter("family")!=null|| !req.getParameter("family").isEmpty()
+                    && req.getParameter("child")!=null|| !req.getParameter("child").isEmpty()
+                    && req.getParameter("otherCredit")!=null|| !req.getParameter("otherCredit").isEmpty()
+                    && req.getParameter("experience")!=null|| !req.getParameter("experience").isEmpty()
+                    && req.getParameter("age")!=null|| !req.getParameter("age").isEmpty()
+                     && req.getParameter("income")!=null|| !req.getParameter("income").isEmpty()){
+
                 HttpSession session = req.getSession();
                 client = (Client) session.getAttribute("client" );
                 if (client!= null){
@@ -76,9 +92,24 @@ public class CreditOpenServlet extends HttpServlet {
                             req.getParameter("type"),
                             Integer.parseInt(req.getParameter("term")));
 
-                            session.setAttribute("creditCalck" , credit);
+                    if (credit!= null){
+                        boolean family = false;
+                        if (req.getParameter("family").equals("0")){
+                            family = false;
+                        }if (req.getParameter("family").equals("1")){
+                            family = true;
+                        }
+                        bidCredit = new BidCredit(StatusBidCreditEnum.PENDING.status, credit,client.getMobilePhone(),Integer.parseInt(req.getParameter("child")),
+                                family, Integer.valueOf(req.getParameter("income")), Double.valueOf(req.getParameter("otherCredit")),
+                                Integer.valueOf(req.getParameter("experience")),Integer.valueOf(req.getParameter("age")));
+                        serviceBid.addBid(bidCredit);
+                        BlockingQueueTask.getInstance().put(new Task(bidCredit.getNumBid()));
 
-                    resp.sendRedirect("/bank_app/confirmCredit");
+                        resp.sendRedirect("/bank_app/credit/open?bidCredit="+bidCredit.getNumBid()+"");
+
+                    }
+                            textMsg = "Нет подходящих предложений!";
+                           doGet(req, resp);
 
                 }else {
                     textMsg = "Авторизуйтесь";
@@ -86,6 +117,7 @@ public class CreditOpenServlet extends HttpServlet {
 
                 }
             }else {
+                textMsg = "Заполните форму";
                 doGet(req,resp);
 
             }
@@ -93,6 +125,10 @@ public class CreditOpenServlet extends HttpServlet {
         }
         if (req.getParameter("cancel")!=null){resp.sendRedirect("/bank_app/credit/main");
         }
+    }
+    private  void  formResult(HttpServletResponse resp, HttpServletRequest req) throws IOException {
+
+        resp.getWriter().append("<p>Завка отправлена - "+req.getParameter("bidCredit")+"</p>");
     }
     private void formOpenCredit(HttpServletResponse resp) throws IOException {
         resp.getWriter().append("<h2>Форма для рассчета кредита</h2>\n" +
@@ -128,6 +164,40 @@ public class CreditOpenServlet extends HttpServlet {
                 "        </select>\n" +
                 "    </label><br />\n" +
                 "    <br />\n" +
+                "    <label>Семейное положение:<br />\n" +
+                "        <select name=\"family\" >\n" + //textType +
+                "            <option value=\"\"></option>\n" +
+                "            <option value=\"0\">нет</option>\n" +
+                "            <option value=\"1\">женат(замужем)</option>\n" +
+                "        </select>\n" +
+                "    </label><br />\n" +
+                "    <label>Доход:<br />\n" +
+                "        <input type=\"text\" name=\"income\"><br />\n" +
+                "    </label>\n" + //textSum +
+                "    <label>Дети:<br />\n" +
+                "        <select name=\"child\" >\n" + //textType +
+                "            <option value=\"0\">нет</option>\n" +
+                "            <option value=\"1\">1</option>\n" +
+                "            <option value=\"2\">2</option>\n" +
+                "            <option value=\"3\">3</option>\n" +
+                "            <option value=\"4\">4 и больше</option>\n" +
+                "        </select>\n" +
+                "    </label><br />\n" +
+                "    <label>Другие кредиты:<br />\n" +
+                "        <input type=\"text\" name=\"otherCredit\"><br />\n" +
+                "    </label>\n" + //textSum +
+                "    <label>Стаж:<br />\n" +
+                "        <select name=\"experience\" >\n" + //textType +
+                "            <option value=\"0\">0</option>\n" +
+                "            <option value=\"1\">1</option>\n" +
+                "            <option value=\"2\">2</option>\n" +
+                "            <option value=\"3\">3</option>\n" +
+                "            <option value=\"4\">4 и больше</option>\n" +
+                "        </select>\n" +
+                "    </label><br />\n" +
+                "    <label>Возраст:<br />\n" +
+                "        <input type=\"text\" name=\"age\"><br />\n" +
+                "    </label>\n" +
                 "    <button name=\"calck\"  type=\"submit\">Рассчитать</button>\n" +
                 "    <button name=\"cancel\" type=\"submit\">Назад</button>\n" +
                 "</form>");}

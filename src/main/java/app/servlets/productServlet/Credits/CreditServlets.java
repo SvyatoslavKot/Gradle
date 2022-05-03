@@ -1,4 +1,4 @@
-package app.servlets.bankProductServlet;
+package app.servlets.productServlet.Credits;
 
 import app.servlets.HtmlPage;
 import app.servlets.include.NavBarServlet;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet("/bank_app/credit/main")
 public class CreditServlets extends HttpServlet {
-    NavBarServlet headerServlet = new NavBarServlet();
+    NavBarServlet navbar = new NavBarServlet();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,17 +21,15 @@ public class CreditServlets extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
 
         resp.getWriter().write(HtmlPage.START.getHtmlElement());
-        headerServlet.navbar(resp,req);
+        navbar.navbar(resp,req);
         resp.getWriter().append("<form method=\"post\">\n" +
                 "    <h3>Кредиты</h3>\n" +
                 "    <button name=\"openCredit\", type=\"submit\">Взять кредит</button>\n" +
                 "</form>");
         resp.getWriter().append(HtmlPage.END.getHtmlElement());
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         if (req.getParameter("openCredit")!= null){
             resp.sendRedirect("/bank_app/credit/open");
         }

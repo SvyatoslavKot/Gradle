@@ -33,7 +33,7 @@ public class PaymentViewServlet extends HttpServlet {
                 "\n" +
                 "        <button onclick=\"location.href='/bank_app/payment/taransit/main'\">Перевести</button>\n" +
                 "        <br/>\n" +
-                "        <button onclick=\"location.href='/bank_app/main/payment'\">Оплатить</button>\n" +
+                "        <button onclick=\"location.href='/bank_app/main/payment'\">Платежи</button>\n" +
                 "\n" +
                 "</div>");}else {
             resp.getWriter().append("<h4>Авторизуйтесь</h4>");

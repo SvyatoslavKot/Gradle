@@ -6,6 +6,7 @@ import app.entities.Client;
 import app.entities.Credit;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -19,6 +20,7 @@ public class WriteAccount {
         }
         return writeAccount;
     }
+
     String path = "C:/Users/NADEZHDA/IdeaProjects/Gradle/src/main/resources/textDB/accounts.txt";
     Client client;
     public void writeAccount (Bank bank)  {
@@ -35,7 +37,8 @@ public class WriteAccount {
                 bufferedWriter.write("term:" + account.getCreditTerm() + " ");
                 bufferedWriter.write("payment:" + account.getPayment() + " ");
                 bufferedWriter.write("cashBack:" + account.getCashBack() + " ");
-                bufferedWriter.write("idHolder:" + account.getIdHolder() + " ");
+                bufferedWriter.write("idHolder:" + account.getLoginHolder() + " ");
+                bufferedWriter.write("date:" + account.getOpenDate()+ " ");
                 bufferedWriter.write("pin:" + account.getPin() + " ");
                 bufferedWriter.write("\n");
 

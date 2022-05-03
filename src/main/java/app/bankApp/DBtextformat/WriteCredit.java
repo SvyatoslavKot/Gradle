@@ -37,7 +37,7 @@ public class WriteCredit {
                 bufferedWriter.write("data:" + credit.getOpeningDate() + " ");
                 bufferedWriter.write("creditTerm:" + credit.getCreditTerm() + " ");
                 bufferedWriter.write("payment:" + credit.getPaymentMonth() + " ");
-                bufferedWriter.write("idHolder:" + credit.getIdHolder() + " ");
+                bufferedWriter.write("phoneHolder:" + credit.getPhoneHolder() + " ");
                 bufferedWriter.write("\n");
 
                 bufferedWriter.flush();

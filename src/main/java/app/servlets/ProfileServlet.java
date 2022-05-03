@@ -21,8 +21,6 @@ import java.io.IOException;
  * Mapping прописан в @WebServlet
  * */
 
-
-
 @WebServlet("/bank_app/profileview")
 public class ProfileServlet extends HttpServlet {
     NavBarServlet navBar = new NavBarServlet();
@@ -46,15 +44,16 @@ public class ProfileServlet extends HttpServlet {
         resp.getWriter().append(HtmlPage.START.htmlElement);
         navBar.navbar(resp,req);
         resp.getWriter().append("" +
-                "<h4>Окно Профиля</h4> <div>" +
+                "<h4>Окно Профиля</h4> <div>" + "<a href = '/bank_app/main2'>изменить</a>" +
                 "Имя: " + client.getUserName() +"<br>" +
                 "Фамилия: " + client.getLastName() +"<br>" +
                 "Login: " + client.getNickName() +"<br>" +
+                "Phone: "+ client.getMobilePhone() + "<br></div>" +
                 "Id: "+ client.getId() + "<br></div>" +
                 "<br/>\n" +
                 "            <button onclick=location.href='/bank_app/profile/credit' >Кредиты</button><br/>\n" +
                 "        <br/>\n" +
-                "            <button onclick=location.href='/bank_app/profile/account'>Счета</button><br/>\n" +
+                "            <button onclick=location.href='/bank_app/profile/accounts'>Счета</button><br/>\n" +
                 "        <br/>\n" +
                 "            <button onclick=location.href='/bank_app/profileview'>Страховки</button><br/>\n" +
                 "        <br/>\n" +

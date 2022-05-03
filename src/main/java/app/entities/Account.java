@@ -1,28 +1,32 @@
 package app.entities;
 
 import app.bankApp.Bank;
-import app.bankApp.FactoryProduct.CreditFactory.CreditCreater;
-import app.bankApp.FactoryProduct.accountFactory.AccountCreater;
-import app.bankApp.FactoryProduct.accountFactory.StandartAccount;
+import app.bankApp.FactoryProduct.Product;
 import app.bankApp.serviceBank.GenerateAccountNumber;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * @author SvyatoslavK
- * create Account implements interface  {@link AccountCreater#create(Bank, Client, int, String, String)} , this entities Account object
+ * create Account implements interface  {@link Product#create(Bank, Client, int, String, String)} , this entities Account object
  * */
-public  class  Account  implements Product,AccountCreater {
+public  class  Account  implements Product {
     private String nameAccount;
     private String accountNumber;
     private double moneyInAccount;
-    // private DataFormat openingDate;
+    private long openDate;
     private int creditTerm;
     private double payment;
     private double cashBack;
-    private String idHolder;
+    private String loginHolder;
     private String pin;
     private boolean lock = false;
 
     GenerateAccountNumber genNum = new GenerateAccountNumber();
-
+    Calendar calendar = new GregorianCalendar();
+        Date date = new Date();
 
     /**
      * default constructor
@@ -38,18 +42,22 @@ public  class  Account  implements Product,AccountCreater {
      * @param creditTerm
      * @param payment
      * @param cashBack
-     * @param idHolder
+     * @param loginHolder
      * @param pin
      */
-    public Account(Bank bank, String nameAccount, int creditTerm, double payment, double cashBack, String idHolder, String pin) {
+    public Account(Bank bank, String nameAccount, int creditTerm, double payment, double cashBack, String loginHolder, String pin) {
         this.nameAccount = nameAccount;
         this.accountNumber = genNum.accountNumber(bank.getBankCollection().getCreditListOfBank().size());
         this.creditTerm = creditTerm;
         this.payment = payment;
         this.cashBack = cashBack;
-        this.idHolder = idHolder;
+        this.loginHolder = loginHolder;
         this.pin = pin;
+        this.openDate = date.getTime();
     }
+
+
+
     @Override
     public boolean reName(String name) {
         if (name.equals(" ")){
@@ -58,7 +66,7 @@ public  class  Account  implements Product,AccountCreater {
         return false;
     }
     @Override
-    public boolean setMoney(double money) {
+    synchronized public boolean setMoney(double money) {
         double balance;
         balance = this.getMoneyInAccount() + money;
         this.setMoneyInAccount(balance);
@@ -66,7 +74,7 @@ public  class  Account  implements Product,AccountCreater {
     }
 
     @Override
-    public boolean getMoney(double money)  {
+    synchronized public boolean getMoney(double money)  {
        if (money <= this.getMoneyInAccount()){
            double balance;
            balance = this.getMoneyInAccount() - money;
@@ -124,12 +132,12 @@ public  class  Account  implements Product,AccountCreater {
         this.cashBack = cashBack;
     }
 
-    public String getIdHolder() {
-        return idHolder;
+    public String getLoginHolder() {
+        return loginHolder;
     }
 
-    public void setIdHolder(String idHolder) {
-        this.idHolder = idHolder;
+    public void setLoginHolder(String idHolder) {
+        this.loginHolder = idHolder;
     }
 
     public String getPin() {
@@ -148,6 +156,14 @@ public  class  Account  implements Product,AccountCreater {
         this.lock = lock;
     }
 
+    public long getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(long openDate) {
+        this.openDate = openDate;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -157,7 +173,7 @@ public  class  Account  implements Product,AccountCreater {
                 ", creditTerm=" + creditTerm +
                 ", payment=" + payment +
                 ", cashBack=" + cashBack +
-                ", idHolder='" + idHolder + '\'' +
+                ", idHolder='" + loginHolder + '\'' +
                 ", pin='" + pin + '\'' +
                 ", genNum=" + genNum +
                 '}';
@@ -169,5 +185,9 @@ public  class  Account  implements Product,AccountCreater {
         return null;
     }
 
+    @Override
+    public Credit create(Bank bank, Client client, double sum, int creditTerm) {
+        return null;
+    }
 
 }

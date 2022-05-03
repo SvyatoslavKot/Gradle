@@ -19,13 +19,13 @@ public class NavBarServlet extends HttpServlet {
         resp.setContentType("text/html; charset=utf-8");
         resp.getWriter().append("<nav>"+bank.getName()  +
 
-                "<button name=\"enter\"  type=\"submit\">ГЛАВНАЯ</button> "+
+                "<button onclick="+"location.href='/bank_app/main2'"+">ГЛАВНАЯ</button> "+
                 " <button onclick="+"location.href='/bank_app/credit/main'"+">Кредиты</button>"+
                 " <button onclick="+"location.href='/bank_app/account/main'"+">Счета</button>"+
                 " <button onclick="+"location.href='/bank_app/main/payment'"+">Платежи</button>");
 
         if (client!= null){
-            resp.getWriter().append("<button onclick=location.href='/bank_app/profileview'>"+ client.getNickName() +"</button></nav> <br>" );
+            resp.getWriter().append("<button onclick=location.href='/bank_app/profileview'>"+ client.getUserName() +"</button></nav> <br>" );
         }else if (client==null){
             resp.getWriter().append("<button onclick=location.href='/bank_app/logining'>Войти </button> </nav> <br>");
             }

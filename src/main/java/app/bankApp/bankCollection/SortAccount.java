@@ -107,7 +107,7 @@ public class SortAccount {
     }
 
     /**
-     * Sort Account by param {@link Account#getIdHolder()}, accept input Collection List<Account>
+     * Sort Account by param {@link Account#getLoginHolder()}, accept input Collection List<Account>
      * used the method sort of the class Collection {@link Collections#sort(List, Comparator)} which override method compare
      * @param accountList
      * @return List
@@ -117,7 +117,7 @@ public class SortAccount {
         Collections.sort(list, new Comparator<Account>() {
             @Override
             public int compare(Account o1, Account o2) {
-                return o1.getIdHolder().compareTo(o2.getIdHolder());
+                return o1.getLoginHolder().compareTo(o2.getLoginHolder());
             }
         });
         return list;

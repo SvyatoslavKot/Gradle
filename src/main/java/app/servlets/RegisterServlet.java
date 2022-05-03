@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
     private String errorNickName ="";
     private String errorPassword = "";
     private  String formMessage = "";
-
+    private String errorPhone = "";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -62,6 +62,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String phone = req.getParameter("phone");
         String userName = req.getParameter("name");
          String lastName = req.getParameter("lastName");
          String id = String.valueOf(bank.getBankCollection().getClientHashMap().size() + 1);
@@ -84,9 +85,9 @@ public class RegisterServlet extends HttpServlet {
 
             if (userName!= null && !userName.isEmpty() && lastName != null && !lastName.isEmpty() &&
              nickName !=null && !nickName.isEmpty() && password1 != null && !password1.isEmpty() &&
-            password2 != null && !password2.isEmpty()){
+            password2 != null && !password2.isEmpty() &&phone != null && !phone.isEmpty()){
                 if (password1.equals(password2)){
-                    client = new Client(userName,lastName,id,nickName,password1);
+                    client = new Client(phone,userName,lastName,id,nickName,password1);
                     try {
                         serviceClient.addClient(client);
                         HttpSession session = req.getSession();
@@ -139,6 +140,9 @@ public class RegisterServlet extends HttpServlet {
                 "                <input type=\"text\"\n" +
                 "                       name=\"lastName\"\n" +
                 "                       value=\""+valueLastName+"\">\n" +errorLastName+"<br />\n" +
+                "            </label>\n" +
+                "            <label>Phone :<br />\n" +
+                "                <input type=\"text\"\n name=\"phone\"\n>\n" +errorLastName+"<br />\n" +
                 "            </label>\n" +
                 "            <label>Nickname:<br />\n" +
                 "                <input type=\"text\" name=\"nickName\"\n" +

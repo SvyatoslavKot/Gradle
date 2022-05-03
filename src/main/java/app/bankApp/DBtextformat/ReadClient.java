@@ -46,7 +46,7 @@ public class ReadClient {
 
                 while (null != (currentLine = br.readLine())) {// если файл не пустой то читаем по строчно данные
                 client = convertStringToClient(currentLine);//создаем объект на основе прочитанной строки
-                clientHashMap.put(client.getNickName(), client);//помещаем объект в мапу
+                clientHashMap.put(client.getMobilePhone(), client);//помещаем объект в мапу
             }
             bank.getBankCollection().getClientHashMap().putAll(clientHashMap);//объединяем коллекции
         } catch (FileNotFoundException ex) {
@@ -71,6 +71,7 @@ public class ReadClient {
             getLastNameAndSet(s,client1);
             getNickName(s,client1);
             getPassword(s,client1);
+            getMobPhone(s,client1);
         }
         return client1;
     }
@@ -97,6 +98,11 @@ public class ReadClient {
     public  void getNameAndSet(String s, Client client1){
         if ( s!= null && s.contains("name:")){
             client1.setUserName(s.split(":")[1]);
+        }
+    }
+    public  void getMobPhone(String s, Client client){
+        if ( s!= null && s.contains("phone:")){
+            client.setMobilePhone(s.split(":")[1]);
         }
     }
 }

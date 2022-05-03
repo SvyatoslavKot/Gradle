@@ -9,26 +9,27 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SortClient {
-
+        ServiceClientsCollection serviceClient = new ServiceClientsCollection();
 
     public List<Client> sortByIdLow(List<Client> clients) {
-        List list = new ArrayList(clients);
-        Collections.sort(list, new Comparator<Client>() {
+
+        //List list = new ArrayList(clients);
+        Collections.sort(clients, new Comparator<Client>() {
             @Override
             public int compare(Client o1, Client o2) {
                 return o1.getId().compareTo(o2.getId());
             }
         });
-        return list;
+        return clients;
     }
     public List<Client> sortByIdHeight(List<Client> clients) {
-        List list = new ArrayList(clients);
-        Collections.sort(list, new Comparator<Client>() {
+        //List list = new ArrayList(clients);
+        Collections.sort(clients, new Comparator<Client>() {
             @Override
             public int compare(Client o1, Client o2) {
-                return o2.getId().compareTo(o1.getId());
+                return -(o1.getId().compareTo(o2.getId()));
             }
         });
-        return list;
+        return clients;
     }
 }

@@ -37,6 +37,7 @@ public class WriteClient {
                 bufferedWriter.write("name:" + client.getUserName() + " ");
                 bufferedWriter.write("lastName:" + client.getLastName() + " ");
                 bufferedWriter.write("nickName:" + client.getNickName() + " ");
+                bufferedWriter.write("phone:" + client.getMobilePhone() + " ");
                 bufferedWriter.write("password:" + client.getPassword() + " ");
                 bufferedWriter.write("id:" + client.getId() + " ");
                 bufferedWriter.write("\n");

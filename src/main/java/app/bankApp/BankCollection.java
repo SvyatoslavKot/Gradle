@@ -1,7 +1,6 @@
 package app.bankApp;
-import app.entities.Account;
-import app.entities.Client;
-import app.entities.Credit;
+import app.bankApp.tasksAdmin.Task;
+import app.entities.*;
 
 import java.util.*;
 
@@ -21,6 +20,22 @@ public class BankCollection {
 
     private HashSet<Account> accountListOfBank = new HashSet<>();
 
+    private HashMap<Integer, BidCredit> creditBids = new HashMap<>();
+
+    public HashMap<Integer, BidCredit> getCreditBids() {
+        return creditBids;
+    }
+
+
+    public HashMap<String,List<Reciept>> recieptForLogin = new HashMap<>();
+
+    public HashMap<String,List<Reciept>> recieptForAccount = new HashMap<>();
+
+    public HashMap<String,List<Reciept>> recieptForCredit = new HashMap<>();
+
+    public HashMap<String,Employee> employeeHashMap = new HashMap<>();
+
+
     /**
      * @return clientHashMap
      */
@@ -38,5 +53,21 @@ public class BankCollection {
 
     public HashSet<Account> getAccountList() {
         return accountListOfBank;
+    }
+
+    public HashMap<String, List<Reciept>> getRecieptForLogin() {
+        return recieptForLogin;
+    }
+
+    public HashMap<String, List<Reciept>> getRecieptForAccount() {
+        return recieptForAccount;
+    }
+
+    public HashMap<String, List<Reciept>> getRecieptForCredit() {
+        return recieptForCredit;
+    }
+
+    public HashMap<String, Employee> getEmployeeHashMap() {
+        return employeeHashMap;
     }
 }

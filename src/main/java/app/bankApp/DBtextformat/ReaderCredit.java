@@ -32,7 +32,7 @@ public class ReaderCredit {
             String currentLine = " ";
             while (null != (currentLine = br.readLine())) {
                 credit = convertStringToCredit(currentLine);
-                Client client = bank.getBankCollection().getClientHashMap().get(credit.getIdHolder());
+                Client client = bank.getBankCollection().getClientHashMap().get(credit.getPhoneHolder());
                 //client.getCreditListPersn().add(credit);
                 bank.getBankCollection().getCreditListOfBank().add(credit);
             }
@@ -54,14 +54,14 @@ public class ReaderCredit {
             readDate(s,credit);
             readCreditTerm(s,credit);
             readPayment(s,credit);
-            readIdHolder(s,credit);
+            readPhone(s,credit);
         }
         return credit;
     }
 
-    private void readIdHolder(String s, Credit credit) {
+    private void readPhone(String s, Credit credit) {
         if (s!= null && s.contains("idHolder:")){
-            credit.setIdHolder(s.split(":")[1]);
+            credit.setPhoneHolder(s.split(":")[1]);
         }
     }
 

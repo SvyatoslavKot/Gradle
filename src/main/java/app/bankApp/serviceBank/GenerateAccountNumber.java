@@ -1,5 +1,11 @@
 package app.bankApp.serviceBank;
 
+import app.bankApp.Bank;
+import app.bankApp.bankCollection.ServiceBidCreditCollection;
+import app.entities.BidCredit;
+
+import java.util.ArrayList;
+
 public class GenerateAccountNumber {
     public int genNum(){
         final int max = 9999;
@@ -24,5 +30,15 @@ public class GenerateAccountNumber {
         }else if (sizeOfCollectin < 1000){
            return "0" + sizeOfCollectin;
         }else return "" + sizeOfCollectin;
+    }
+
+    public int genBidNum (){
+        int num;
+        num = rnd(999);
+        while (Bank.getInstance().getBankCollection().getCreditBids().get(num)!=null){
+            num = num ++;
+        }
+        return num;
+
     }
 }

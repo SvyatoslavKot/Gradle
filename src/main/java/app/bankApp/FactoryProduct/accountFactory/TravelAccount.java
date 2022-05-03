@@ -9,10 +9,9 @@ import app.entities.Client;
  */
 public class TravelAccount extends Account {
     /**
-     * method interface of {@link AccountCreater#create(Bank, Client, int, String, String)}
+     * method interface of {@link app.bankApp.FactoryProduct.Product#create(Bank, Client, int, String, String)}
      * Account object creation cycle ,using param of level {@link LevelOfAccount}
      * and used constructor of Account {@link Account#create(Bank, Client, int, String, String)}
-     * @see AccountCreater
      * @see Account
      * @param bank
      * @param client
@@ -24,11 +23,11 @@ public class TravelAccount extends Account {
     @Override
     public Account create(Bank bank, Client client, int creditTerm, String pin, String level) {
         if (level.equals("LIGHT")) {
-            return new Account(bank,TypeOfAccount.TRAVEL.type+"_"+LevelOfAccount.LIGHT.level,creditTerm,500,5.5, client.getNickName(), pin);
+            return new Account(bank,TypeOfAccount.TRAVEL.type+"_"+LevelOfAccount.LIGHT.level,creditTerm,500,5.5, client.getMobilePhone(), pin);
         } else if (level.equals("STANDARD")) {
-            return new Account(bank,TypeOfAccount.TRAVEL.type+"_"+LevelOfAccount.STANDARD.level,creditTerm,750,7.5, client.getNickName(), pin);
+            return new Account(bank,TypeOfAccount.TRAVEL.type+"_"+LevelOfAccount.STANDARD.level,creditTerm,750,7.5, client.getMobilePhone(), pin);
         } else if (level.equals("GOLD")) {
-            return new Account(bank,TypeOfAccount.TRAVEL.type+"_"+LevelOfAccount.GOLD.level,creditTerm,990,9.5, client.getNickName(), pin);
+            return new Account(bank,TypeOfAccount.TRAVEL.type+"_"+LevelOfAccount.GOLD.level,creditTerm,990,9.5, client.getMobilePhone(), pin);
         } {
             return null;
         }
