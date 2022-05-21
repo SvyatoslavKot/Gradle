@@ -1,3 +1,3 @@
-nameAccount:Standard_account_Standard accountNumber:1338199162690007 moneyInAccount:0 term:12 payment:350 cashBack:4.5 idHolder:hh pin:000 
-nameAccount:Currency_account_Gold accountNumber:1338751241260007 moneyInAccount:0 term:36 payment:880 cashBack:0.0 idHolder:hh pin:000 
-nameAccount:Currency_account_Gold accountNumber:133841738090007 moneyInAccount:0 term:12 payment:880 cashBack:0.0 idHolder:hh pin:000 
+nameAccount:Premium_account_Standard accountNumber:1338530912990001 moneyInAccount:888777.0 term:12 payment:1500.0 cashBack:9.5 idHolder:89763453255 date:1651344722710 pin:000 
+nameAccount:Currency_account_Light accountNumber:1338984377870001 moneyInAccount:0.0 term:12 payment:500.0 cashBack:0.0 idHolder:897634532456 date:1651343184819 pin:000 
+nameAccount:Standard_account_Light accountNumber:133822669880001 moneyInAccount:111.0 term:12 payment:200.0 cashBack:3.5 idHolder:89763453244 date:1651344693334 pin:000 
