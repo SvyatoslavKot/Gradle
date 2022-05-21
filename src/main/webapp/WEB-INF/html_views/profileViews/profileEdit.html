@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" >
+    <title>Profile edit</title>
+
+</head>
+<body>
+<header  th:insert="include/header :: header"></header>
+<main>
+    <div>
+        <h3>Edit User data page</h3><br>
+    </div>
+    <div >
+        <form th:method="patch" th:action="@{/bank_app/profile/{id}(id=${client.getId})}" th:odject="${client}">
+            <label for="name">Name: </label><br/>
+                <input type="text" th:field="*{client.userName}" id="name"/><br/>
+
+            <label for="lastName">Last Name: </label><br/>
+            <input type="text" th:field="*{client.lastName}" id="lastName"/><br/>
+
+            <label for="eMail">@mail:</label><br/>
+            <input type="text" th:field="*{client.eMail}" id="eMail"/><br/>
+
+            <label for="mobilePhone">Mobile Phone:</label><br/>
+            <input type="text" th:field="*{client.mobilePhone}" id="mobilePhone"/><br/>
+
+            <label for="addressee">addressee:</label><br/>
+            <input type="text" th:field="*{client.addressee}" id="addressee"/><br/>
+
+            <button name="enter"  type="submit">Enter</button><br/>
+        </form>
+        <form th:method="delete" th:action="@{/bank_app/profile/{id}(id=${client.getId()})}">
+            <button type="submit">Delete</button><br/>
+        </form>
+        <form th:method="get" th:action="@{/bank_app/profile/{id}(id=${client.getId()})}">
+            <button type="submit">Cancel</button><br/>
+        </form>
+    </div>
+</main>
+<footer th:insert="include/footer :: footer"></footer>
+</body>
+</html>
