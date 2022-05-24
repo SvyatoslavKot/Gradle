@@ -17,10 +17,13 @@ public class EmployTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "apply_id")
+    private int apply_id;
     @Column(name = "apply_credit_num")
     private String apply_credit_num;
 
-    public EmployTask(String apply_credit_num) {
+    public EmployTask(int applyId, String apply_credit_num) {
+        this.apply_id = applyId;
         this.apply_credit_num = apply_credit_num;
     }
 }

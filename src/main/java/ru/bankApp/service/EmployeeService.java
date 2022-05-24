@@ -27,4 +27,8 @@ public class EmployeeService {
     public void delete(int id){
         employeeDao.delete(id);
     }
+
+    public Employee getByPhone(String phone){
+       return employeeDao.getByPhone(phone);
+    }
 }

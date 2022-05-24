@@ -5,10 +5,10 @@
     <title>Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 </head>
-<body>
+<body class="container py-6>">
 <header th:insert="include/header :: header"></header>
 
-<main>
+<main class="py-5 text-left">
     <h4>Profile View</h4>
     <div th:object="${client}">
         <label>Name: <p th:text="${client.getUserName()}">userName</p> </label> </br>
@@ -19,23 +19,18 @@
         <a th:href="@{/bank_app/profile/{id}/edit(id=${client.getId})}">create profile</a>
     </div>
     <br/>
-    <form>
-        <button onclick=location.href='/bank_app/profile/credit' >My Credits</button><br/>
-        <br/>
+    <form th:method="get" th:action="@{/bank_app/credits/list/{id}(id=${client.getId})}">
+        <button class="mb-1" name="myCredits" type="submit" >My Credits</button>
     </form>
     <form th:method="get" th:action="@{/bank_app/account/list/{id}(id=${client.getId})}">
-        <button name="myAccount" type="submit" >My Accounts</button><br/>
-        <br/>
+        <button class="mb-1" name="myAccount" type="submit" >My Accounts</button>
     </form>
     <form>
-        <button onclick=location.href='/bank_app/profileview'>My Insurance</button><br/>
-        <br/>
+        <button class="mb-1" onclick=location.href='/bank_app/profileview'>My Insurance</button>
     </form>
-
-    <button onclick=location.href='/bank_app/main/payment'>Payment</button><br/>
-    <br/>
+    <button class="mb-1" onclick=location.href='/bank_app/money_operation/main'>Money Operation</button>
     <form th:method="post" th:action="@{/bank_app/sing_in/logout}" th:odject="${client}">
-    <button name="exit" type="submit">Log Out</button>
+    <button class="mb-1" name="exit" type="submit">Log Out</button>
     </form>
     </div>
 

@@ -47,10 +47,12 @@
             </label><br />
         <br/>
             <label >Link Account:<br />
-                <select th:each="account : ${accounts}" name="linkAccount">
+                <select name="linkAccount">
                     <option value=""></option>
                     <option value="new">New</option>
-                    <option th:value="${account.id}" th:utext="${account.account_num}"></option>
+                    <div th:each="account : ${accounts}">
+                        <option th:value="${account.id}" th:utext="${account.account_num}"></option>
+                    </div>
                 </select>
             </label><br />
             <br/>

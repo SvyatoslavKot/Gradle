@@ -1,12 +1,12 @@
 package ru.bankApp.app.bankApp.tasksAdmin;
 
 public enum StatusApplyCreditEnum {
-    PENDING("На рассмотрении"),
+    PENDING("Apply pending"),
     PREV_APPROVED("Предварительно одобрено"),
     PREV_DENIED("Предварительно отклонено"),
-    APPROVED("Одобрено"),
+    APPROVED("Apply approved"),
     CHANGE_APPROVED("Одобрено с изменениями"),
-    DENIED("Отклонено");
+    DENIED("Apply denied");
 
     //значение enum
     public String status;

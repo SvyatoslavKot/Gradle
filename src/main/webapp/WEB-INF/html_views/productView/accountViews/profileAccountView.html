@@ -61,6 +61,9 @@ xmlns:th="http://www.thymeleaf.org">
             <td th:utext="${account.cashBack}">cash Back</td>
         </tr>
     </table>
+    <form  th:method="get" th:action="@{/bank_app/account}">
+        <button class="mb-1" name="add" type="submit" >Cancel</button>
+    </form>
 </main>
 
 <footer th:insert="include/footer :: footer"></footer>

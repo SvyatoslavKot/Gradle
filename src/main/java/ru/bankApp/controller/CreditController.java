@@ -3,41 +3,42 @@ package ru.bankApp.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.bankApp.app.bankApp.tasksAdmin.StatusApplyCreditEnum;
 import ru.bankApp.app.entities.ApplyCredit;
 import ru.bankApp.app.entities.EmployTask;
 import ru.bankApp.app.entities.accountFactory.Account;
 import ru.bankApp.app.entities.Client;
+import ru.bankApp.app.entities.accountFactory.AccountFactory;
 import ru.bankApp.app.entities.creditFactory.Credit;
 import ru.bankApp.app.entities.creditFactory.CreditFactory;
-import ru.bankApp.service.AccountService;
-import ru.bankApp.service.ApplyCreditService;
-import ru.bankApp.service.CreditService;
-import ru.bankApp.service.EmployTaskService;
+import ru.bankApp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.http.HttpRequest;
 import java.util.List;
 
 @Controller
 @RequestMapping("/bank_app/credits")
 public class CreditController {
+    AccountFactory accountFactory = new AccountFactory();
     CreditFactory creditFactory = new CreditFactory();
     AccountService accountService;
     CreditService creditService;
-    EmployTaskService employTaskService;
+    ApplyTaskService employTaskService;
     ApplyCreditService applyCreditService;
+    ClientService clientService;
 
 
-    public CreditController(AccountService accountService, ApplyCreditService applyService, CreditService creditService, EmployTaskService employTaskService) {
+    public CreditController(AccountService accountService, ApplyCreditService applyService, CreditService creditService, ApplyTaskService employTaskService,
+    ClientService clientService) {
         this.creditService = creditService;
         this.accountService = accountService;
         this.employTaskService = employTaskService;
         this.applyCreditService = applyService;
+        this.clientService = clientService;
     }
 
     @GetMapping()
@@ -52,12 +53,13 @@ public class CreditController {
             return "exceptionViews/notAutorisation";
         }
         List<Account> accounts = accountService.accountsByClientId(client.getId());
+        accounts.add(new Account());
         model.addAttribute("accounts", accounts);
         return "productView/creditViews/creditOpen";
     }
 
     @PostMapping("/open/")
-    public  String calckCredit(HttpSession session, HttpServletRequest req){
+    public  String calckCredit(HttpSession session, HttpServletRequest req,Model model){
         String sum = req.getParameter("sum");
         String type = req.getParameter("type");
         String term = req.getParameter("term");
@@ -70,6 +72,8 @@ public class CreditController {
         String child = req.getParameter("child");
 
         Client client = (Client) session.getAttribute("client");
+        Account account;
+        Credit credit;
         if (client==null){
             return "exceptionViews/notAutorisation";
         }
@@ -80,21 +84,81 @@ public class CreditController {
                 child==null||child.length()<1){
             return "redirect:/bank_app/credits/open/";
         }
-        Credit credit = creditFactory.createCredit(client,Double.parseDouble(sum),type,Integer.parseInt(term));
+        credit = creditFactory.createCredit(client,Double.parseDouble(sum),type,Integer.parseInt(term));
+        creditService.genAccNum(credit);
+
+        if (linkAcc.equals("new")){
+            account = accountFactory.createAccount(client,"STANDARD",Integer.parseInt(term),"0000","STANDARD");
+            accountService.genAccNum(account);
+            accountService.addAccount(account);
+            credit.setAccount_link_id(accountService.getByNum(account.getAccount_num()).getId());
+        }else {
+            credit.setAccount_link_id(Integer.parseInt(linkAcc));
+        }
+
         ApplyCredit applyCredit = new ApplyCredit(applyCreditService.genAccNum(),client.getId(),
                 Integer.parseInt(child),family,Integer.parseInt(income),Integer.parseInt(experience),
                 Integer.parseInt(age),Double.parseDouble(otherCredit));
         if (credit== null){
             applyCredit.setStatus(StatusApplyCreditEnum.DENIED.status);
             applyCreditService.add(applyCredit);
-            return "redirect:/bank_app/";
+            return "redirect:/bank_app/credits/applySent";
         }
-        applyCredit.setStatus(StatusApplyCreditEnum.PENDING.status);
-        applyCredit.setCredit_id(credit.getId());
-        EmployTask employTask = new EmployTask(applyCredit.getNumber());
+
         creditService.add(credit);
+
+        applyCredit.setStatus(StatusApplyCreditEnum.PENDING.status);
+        applyCredit.setCredit_id(creditService.getByNum(credit.getAccount_number()).getId());
         applyCreditService.add(applyCredit);
+        EmployTask employTask = new EmployTask(applyCreditService.getByNum(applyCredit.getNumber()).getId(),applyCredit.getNumber());
+
+
         employTaskService.add(employTask);
-        return "redirect:/bank_app/credits/";
+        model.addAttribute("apply",applyCredit);
+        return "redirect:/bank_app/credits/applySent/";
+    }
+
+    @GetMapping("/applySent/")
+    public String applySent(){
+
+        return "productView/creditViews/creditApplySent";
+    }
+
+    @GetMapping("/list/{id}")
+    public String getClientAccount(@PathVariable("id") int id, HttpSession session, Model model, HttpServletRequest req){
+        Client client = clientService.getById(id);
+        List<Credit> creditList = creditService.getByClientId(id);
+        if (req.getParameter("sorted")!=null){
+            if (req.getParameter("sorted").equals("name")){
+                creditList = creditService.sortByName(creditList);
+            }
+            if (req.getParameter("sorted").equals("balance")){
+                creditList = creditService.sortByBalance(creditList);
+            }
+            if (req.getParameter("sorted").equals("numh")){
+                creditList = creditService.sortByNumHi(creditList);
+            }
+            if (req.getParameter("sorted").equals("numl")){
+                creditList = creditService.sortByNumlow(creditList);
+            }
+            if (req.getParameter("sorted").equals("termlow")){
+                creditList = creditService.sortByTermlow(creditList);
+            }
+            if (req.getParameter("sorted").equals("termhi")){
+                creditList = creditService.sortByTermHi(creditList);
+            }
+        }
+
+        model.addAttribute("client", client);
+        model.addAttribute("credits", creditList);
+        return "productView/creditViews/profileCreditsView";
+    }
+
+    @GetMapping("/item/{id}")
+    public String itemAccount(@PathVariable("id")int id,HttpSession session, Model model){
+        Client client = (Client) session.getAttribute("client");
+        model.addAttribute("client", client);
+        model.addAttribute("credit",creditService.getById(id));
+        return "productView/creditViews/creditItem";
     }
 }
