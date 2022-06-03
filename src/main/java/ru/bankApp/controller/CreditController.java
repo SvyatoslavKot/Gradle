@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.bankApp.app.bankApp.tasksAdmin.StatusApplyCreditEnum;
 import ru.bankApp.app.entities.ApplyCredit;
 import ru.bankApp.app.entities.EmployTask;
+import ru.bankApp.app.entities.Employee;
 import ru.bankApp.app.entities.accountFactory.Account;
 import ru.bankApp.app.entities.Client;
 import ru.bankApp.app.entities.accountFactory.AccountFactory;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("/bank_app/credits")
+@RequestMapping("/bank_app/")
 public class CreditController {
     AccountFactory accountFactory = new AccountFactory();
     CreditFactory creditFactory = new CreditFactory();
@@ -41,24 +42,21 @@ public class CreditController {
         this.clientService = clientService;
     }
 
-    @GetMapping()
+    @GetMapping("/credits/")
     public String creditMain(){
         return "productView/creditViews/creditMain";
     }
 
-    @GetMapping("/open/")
+    @GetMapping("/client/credits/open/")
     public String openCredit(HttpSession session, Model model){
         Client client = (Client) session.getAttribute("client");
-        if (client==null){
-            return "exceptionViews/notAutorisation";
-        }
         List<Account> accounts = accountService.accountsByClientId(client.getId());
         accounts.add(new Account());
         model.addAttribute("accounts", accounts);
         return "productView/creditViews/creditOpen";
     }
 
-    @PostMapping("/open/")
+    @PostMapping("/client/credits/open/")
     public  String calckCredit(HttpSession session, HttpServletRequest req,Model model){
         String sum = req.getParameter("sum");
         String type = req.getParameter("type");
@@ -74,15 +72,12 @@ public class CreditController {
         Client client = (Client) session.getAttribute("client");
         Account account;
         Credit credit;
-        if (client==null){
-            return "exceptionViews/notAutorisation";
-        }
         if (sum==null||sum.length()<1||type==null||type.length()<1||term==null||term.length()<1||
                 linkAcc==null||linkAcc.length()<1||family==null||family.length()<1||
                 income==null||income.length()<1||otherCredit==null||otherCredit.length()<1||
                 experience==null||experience.length()<1||age==null||age.length()<1||
                 child==null||child.length()<1){
-            return "redirect:/bank_app/credits/open/";
+            return "redirect:/bank_app/client/credits/open/";
         }
         credit = creditFactory.createCredit(client,Double.parseDouble(sum),type,Integer.parseInt(term));
         creditService.genAccNum(credit);
@@ -102,7 +97,7 @@ public class CreditController {
         if (credit== null){
             applyCredit.setStatus(StatusApplyCreditEnum.DENIED.status);
             applyCreditService.add(applyCredit);
-            return "redirect:/bank_app/credits/applySent";
+            return "redirect:/bank_app/client/credits/applySent";
         }
 
         creditService.add(credit);
@@ -115,16 +110,16 @@ public class CreditController {
 
         employTaskService.add(employTask);
         model.addAttribute("apply",applyCredit);
-        return "redirect:/bank_app/credits/applySent/";
+        return "redirect:/bank_app/client/credits/applySent/";
     }
 
-    @GetMapping("/applySent/")
+    @GetMapping("/client/credits/applySent/")
     public String applySent(){
 
         return "productView/creditViews/creditApplySent";
     }
 
-    @GetMapping("/list/{id}")
+    @GetMapping("/client/credits/list/{id}")
     public String getClientAccount(@PathVariable("id") int id, HttpSession session, Model model, HttpServletRequest req){
         Client client = clientService.getById(id);
         List<Credit> creditList = creditService.getByClientId(id);
@@ -154,9 +149,11 @@ public class CreditController {
         return "productView/creditViews/profileCreditsView";
     }
 
-    @GetMapping("/item/{id}")
+    @GetMapping("credits/item/{id}")
     public String itemAccount(@PathVariable("id")int id,HttpSession session, Model model){
+        Employee employee = (Employee) session.getAttribute("employee");
         Client client = (Client) session.getAttribute("client");
+        model.addAttribute("employee", employee);
         model.addAttribute("client", client);
         model.addAttribute("credit",creditService.getById(id));
         return "productView/creditViews/creditItem";

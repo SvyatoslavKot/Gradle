@@ -15,7 +15,7 @@ import ru.bankApp.service.CreditService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/bank_app/apply")
+@RequestMapping("/bank_app/client/apply")
 public class ApplyController {
     ClientService clientService;
     ApplyCreditService applyCreditService;
@@ -29,7 +29,7 @@ public class ApplyController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/client/{id}")
+    @GetMapping("/{id}")
     public String applyClientView(@PathVariable("id")int id, Model model){
         Client client = clientService.getById(id);
         List<ApplyCredit> applyCredits = applyCreditService.all();
@@ -48,7 +48,7 @@ public class ApplyController {
         }
         creditService.upDateClientId(credit.getId(), client.getId());
         applyCreditService.delete(applyCredit.getId());
-        return "redirect:/bank_app/apply/client/"+client.getId();
+        return "redirect:/bank_app/client/apply/"+client.getId();
     }
 
     @DeleteMapping("delete/{id}")
@@ -62,6 +62,6 @@ public class ApplyController {
         }
         creditService.delete(credit.getId());
         applyCreditService.delete(applyCredit.getId());
-        return "redirect:/bank_app/apply/client/"+client.getId();
+        return "redirect:/bank_app/client/apply/"+client.getId();
     }
 }

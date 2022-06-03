@@ -29,11 +29,11 @@ public class BankCollection {
     }
 
 
-    public HashMap<String,List<Reciept>> recieptForLogin = new HashMap<>();
+    public HashMap<String,List<Receipt>> recieptForLogin = new HashMap<>();
 
-    public HashMap<String,List<Reciept>> recieptForAccount = new HashMap<>();
+    public HashMap<String,List<Receipt>> recieptForAccount = new HashMap<>();
 
-    public HashMap<String,List<Reciept>> recieptForCredit = new HashMap<>();
+    public HashMap<String,List<Receipt>> recieptForCredit = new HashMap<>();
 
     public HashMap<String,Employee> employeeHashMap = new HashMap<>();
 
@@ -57,15 +57,15 @@ public class BankCollection {
         return accountListOfBank;
     }
 
-    public HashMap<String, List<Reciept>> getRecieptForLogin() {
+    public HashMap<String, List<Receipt>> getRecieptForLogin() {
         return recieptForLogin;
     }
 
-    public HashMap<String, List<Reciept>> getRecieptForAccount() {
+    public HashMap<String, List<Receipt>> getRecieptForAccount() {
         return recieptForAccount;
     }
 
-    public HashMap<String, List<Reciept>> getRecieptForCredit() {
+    public HashMap<String, List<Receipt>> getRecieptForCredit() {
         return recieptForCredit;
     }
 

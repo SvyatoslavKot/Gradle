@@ -5,7 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.bankApp.app.bankApp.exeption.ClientAddExeption;
 import ru.bankApp.app.entities.Client;
+import ru.bankApp.app.entities.Employee;
 import ru.bankApp.service.ClientService;
+import ru.bankApp.service.EmployeeService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +18,10 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value ="/bank_app/sing_in/")
 public class SingInController {
     ClientService clientService;
-    public SingInController(ClientService clientService) {
+    EmployeeService employeeService;
+    public SingInController(ClientService clientService, EmployeeService employeeService) {
         this.clientService = clientService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping
@@ -26,10 +30,9 @@ public class SingInController {
         Client client;
         model.addAttribute("client", new Client());
         HttpSession session = req.getSession();
-        session.getAttribute("client");
         client = (Client) session.getAttribute("client");
         if (client!=null){
-            return "redirect:/bank_app/profile/"+client.getId();
+            return "redirect:/bank_app/client/profile/"+client.getId();
         }
         return "navBar/logging";
     }
@@ -43,7 +46,10 @@ public class SingInController {
                 Client client =clientService.checkPassword(p,pass);
                 if (client!=null){
                     session.setAttribute("client", client);
-                    return "redirect:/bank_app/profile/"+client.getId();
+                    if (session.getAttribute("employee")!=null){
+                        session.removeAttribute("employee");
+                    }
+                    return "redirect:/bank_app/client/profile/"+client.getId();
                 }
                 return "navBar/logging";
             } catch (ClientAddExeption e) {
@@ -65,5 +71,25 @@ public class SingInController {
         }else {
             return "redirect:/bank_app/sing_in/";
         }
+    }
+
+    @GetMapping("/employee")
+    public String loginViewEmpl(){
+        return "employeeViews/employeeLoggin";
+    }
+    @PostMapping("/employee")
+    public String singIn(HttpSession session, @RequestParam("login")String login, @RequestParam("password")String password){
+        if (login!=null||login.length()<1&&password!=null||password.length()<1){
+            Employee employee;
+            employee = employeeService.getByPhone(login);
+            if (employee.getPassword().equals(password)){
+                session.setAttribute("employee", employee);
+                if (session.getAttribute("client")!=null){
+                    session.removeAttribute("client");
+                }
+                return "redirect:/bank_app/employee/main";
+            }
+        }
+        return "redirect:/bank_app/sing_in/employee";
     }
 }

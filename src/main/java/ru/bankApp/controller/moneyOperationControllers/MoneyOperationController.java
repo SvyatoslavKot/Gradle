@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/bank_app/money_operation/main")
+@RequestMapping("/bank_app/client/money_operation/")
 public class MoneyOperationController {
-    @GetMapping()
+    @GetMapping("/main")
     public String mainView(){
         return "moneyOperationViews/moneyOperationMain";
     }

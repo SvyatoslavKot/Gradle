@@ -20,24 +20,8 @@ public class AdminController {
 
     @GetMapping
     public String adminView(){
-        return "adminViews/adminLogin";
+        return "adminViews/adminMain";
     }
-
-    @PostMapping()
-    public String adminLogin(@RequestParam("login")String login,@RequestParam("password")String password){
-        if (login!=null||login.length()<1&&password!=null||password.length()<1){
-            if (login.equals("admin")){
-                if (password.equals("admin")){
-                    return "redirect:/bank_app/admin/main";
-                }
-            }
-        }
-        return "redirect:/bank_app/admin";
-    }
-    @GetMapping("/main")
-        public String adminMain(){
-            return"adminViews/adminMain";
-        }
 
     @GetMapping("/employs")
     public String adminEmploys(Model model){

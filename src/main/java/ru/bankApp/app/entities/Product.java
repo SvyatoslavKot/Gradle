@@ -1,6 +1,5 @@
 package ru.bankApp.app.entities;
 
-import ru.bankApp.app.entities.Client;
 import ru.bankApp.app.entities.accountFactory.Account;
 import ru.bankApp.app.entities.creditFactory.Credit;
 
@@ -11,8 +10,8 @@ public interface Product {
 
     public boolean reName (String name);
 
-    public boolean setMoney(double money);
+    public boolean pluseMoney(double money);
 
-    public boolean getMoney(double money);
+    public boolean minusMoney(double money);
 
 }

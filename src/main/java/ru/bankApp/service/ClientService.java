@@ -1,7 +1,4 @@
 package ru.bankApp.service;
-
-import org.hibernate.criterion.NotNullExpression;
-import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 import ru.bankApp.app.bankApp.exeption.ClientAddExeption;
 import ru.bankApp.app.entities.Client;

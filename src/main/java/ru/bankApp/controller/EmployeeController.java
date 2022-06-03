@@ -13,6 +13,7 @@ import ru.bankApp.app.entities.creditFactory.Credit;
 import ru.bankApp.service.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("bank_app/employee")
@@ -36,25 +37,11 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    public String login(){
-        return "employeeViews/employeeLoggin";
+    public String login(HttpSession session){
+
+            return "redirect:/bank_app/employee/main";
     }
 
-    @PostMapping()
-    public String singIn(HttpSession session, @RequestParam("login")String login, @RequestParam("password")String password){
-        if (login!=null||login.length()<1&&password!=null||password.length()<1){
-            Employee employee;
-            employee = employeeService.getByPhone(login);
-            if (employee.getPassword().equals(password)){
-                session.setAttribute("employee", employee);
-                if (session.getAttribute("client")!=null){
-                    session.removeAttribute("client");
-                }
-                return "redirect:/bank_app/employee/main";
-            }
-        }
-        return "redirect:/bank_app/employee";
-    }
 
     @GetMapping("/main")
     public String employeeMain(){
@@ -116,5 +103,37 @@ public class EmployeeController {
         model.addAttribute("credit", credit);
        model.addAttribute("apply", applyCredit);
         return "employeeViews/employeeEditApply";
+    }
+    @GetMapping("/lists")
+    public String listView(){
+        return "employeeViews/employeeLists";
+    }
+
+    @GetMapping("/lists/credit")
+    public String listCredit( Model model){
+        List<Credit> credits = creditService.all();
+        model.addAttribute("credits", credits);
+        return "employeeViews/employeeCreditList";
+    }
+
+    @GetMapping("/lists/account")
+    public String listAccount( Model model){
+        List<Account> accounts = accountService.all();
+        model.addAttribute("accounts", accounts);
+        return "employeeViews/employeeAccountList";
+    }
+
+    @GetMapping("/lists/client")
+    public String listClient( Model model){
+        List<Client> clients = clientService.getAllClient();
+        model.addAttribute("clients", clients);
+        return "employeeViews/employeeClientList";
+    }
+
+    @GetMapping("/lists/apply")
+    public String listApply( Model model){
+        List<ApplyCredit> apples = applyCreditService.all();
+        model.addAttribute("apples", apples);
+        return "employeeViews/employeeApplyList";
     }
 }

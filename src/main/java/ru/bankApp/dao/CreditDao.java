@@ -17,6 +17,11 @@ public class CreditDao {
     public CreditDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    public List<Credit> all(){
+        return jdbcTemplate.query("SELECT * FROM credits", new BeanPropertyRowMapper<>(Credit.class));
+    }
+
     public  void add(Credit credit){
         jdbcTemplate.update("INSERT INTO credits(client_id,account_link_id,name,account_number,amount,ptc,opening_date,credit_term,payment_month) VALUES(?,?,?,?,?,?,?,?,?)",
                 0,credit.getAccount_link_id(),credit.getName(),credit.getAccount_number(),credit.getAmount(),
@@ -39,6 +44,12 @@ public class CreditDao {
     public void upDateClientId(int id, int clientId){
         jdbcTemplate.update("UPDATE credits SET client_id= ? WHERE id=?",
                 clientId, id);
+    }
+
+    public void upDate(int id, Credit credit){
+        jdbcTemplate.update("UPDATE credits SET client_id= ?,account_link_id= ?,name= ?,account_number= ?,amount= ?,ptc= ?,opening_date= ?,credit_term= ?,payment_month= ? WHERE id=?",
+                credit.getClient_id(),credit.getAccount_link_id(),credit.getName(),credit.getAccount_number(),credit.getAmount(),
+                credit.getPtc(),credit.getOpening_date(),credit.getCredit_term(),credit.getPayment_month(), id);
     }
 
     public void delete(int id){

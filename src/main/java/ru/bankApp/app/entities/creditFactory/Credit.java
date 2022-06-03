@@ -1,16 +1,16 @@
 package ru.bankApp.app.entities.creditFactory;
 
+import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Table;
 import ru.bankApp.app.entities.Product;
 import ru.bankApp.app.entities.accountFactory.Account;
 import ru.bankApp.app.entities.Client;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "credits")
+@Table(appliesTo = "credits")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,12 +54,15 @@ public class Credit implements Product {
     }
 
     @Override
-    synchronized public boolean setMoney(double money) {
+    synchronized public boolean pluseMoney(double money) {
+        double balance;
+        balance = this.amount - money;
+        this.setAmount(balance);
         return true;
     }
 
     @Override
-    synchronized public boolean getMoney(double money) {
+    synchronized public boolean minusMoney(double money) {
         return false;
     }
 

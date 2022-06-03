@@ -29,6 +29,9 @@ public class CreditService {
         c.setAccount_number(num);
         return c;
     }
+    public List<Credit> all(){
+        return creditDao.all();
+    }
 
     public void add (Credit credit){
         creditDao.add(credit);
@@ -47,6 +50,10 @@ public class CreditService {
 
     public  void  upDateClientId(int id, int clientId){
         creditDao.upDateClientId(id,clientId);
+    }
+
+    public void  upDate(int id, Credit credit){
+        creditDao.upDate(id, credit);
     }
 
     public void delete(int id){

@@ -14,14 +14,14 @@
         <p> Selected a bank account for you</p>
     </div>
     <div th:object="${account}">
-        <form th:method="post" th:action="@{/bank_app/account/open/{id}(id=${account.getId})}">
+        <form th:method="post" th:action="@{/bank_app/client/account/open/{id}(id=${account.getId})}">
             <label>Name: <p th:text="${account.getName()}">Name</p> </label> </br>
             <label>Term: <p th:text="${account.getCredit_term()}">term</p> </label></br>
             <label>CashBack <p th:text="${account.getCashBack()}">cashBack</p> </label></br>
             <label>Payment: <p th:text="${account.getPayment()}">payment</p> </label></br>
             <button name="enter"  type="submit">Enter</button>
         </form>
-        <form th:method="delete" th:action="@{/bank_app/account/open/{id}(id=${account.getId})}">
+        <form th:method="delete" th:action="@{/bank_app/client/account/open/{id}(id=${account.getId})}">
             <button name="cancel" >Cancel</button>
         </form>
 

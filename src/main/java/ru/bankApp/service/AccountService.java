@@ -5,6 +5,7 @@ import ru.bankApp.app.entities.accountFactory.Account;
 import ru.bankApp.app.bankApp.serviceBank.GenerateAccountNumber;
 import ru.bankApp.dao.AccountDao;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +16,9 @@ public class AccountService {
 
     AccountDao accountDao;
     GenerateAccountNumber genAccNumber = new GenerateAccountNumber();
+
+
+
     public AccountService(AccountDao accountDao) {
         this.accountDao = accountDao;
     }
@@ -31,6 +35,20 @@ public class AccountService {
     public Account getByNum(String num){
         return accountDao.getByNum(num);
     }
+    public void delete (int id){
+        accountDao.delete(id);
+    }
+    public void upDate(int id, Account a){
+        accountDao.upDate(id, a);
+    }
+    public  void  upDateClientId(int id, int clientId){
+        accountDao.upDateClientId(id,clientId);
+    }
+    public List<Account> accountsByClientId(int clientId){
+        return accountDao.accountsByClient(clientId);
+    }
+
+
     public Account genAccNum(Account a){
        String num;
         num = genAccNumber.accountNumber();
@@ -39,15 +57,6 @@ public class AccountService {
         }
         a.setAccount_num(num);
         return a;
-    }
-    public void delete (int id){
-        accountDao.delete(id);
-    }
-    public  void  upDateClientId(int id, int clientId){
-        accountDao.upDateClientId(id,clientId);
-    }
-    public List<Account> accountsByClientId(int clientId){
-        return accountDao.accountsByClient(clientId);
     }
 
     public List<Account> sortByNumHi(List<Account> accounts){

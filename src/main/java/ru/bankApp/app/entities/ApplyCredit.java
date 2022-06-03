@@ -1,11 +1,12 @@
 package ru.bankApp.app.entities;
-
-import lombok.*;
 import javax.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Table;
+
 import java.util.Objects;
 
 @Entity
-@Table(name = "apply_credit")
+@Table(appliesTo = "apply_credit")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

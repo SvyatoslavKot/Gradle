@@ -1,11 +1,11 @@
 package ru.bankApp.app.entities;
 
-import ru.bankApp.app.entities.accountFactory.Account;
-
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Table;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import ru.bankApp.app.entities.accountFactory.Account;
 import java.io.Serializable;
 import java.util.*;
 
@@ -15,8 +15,9 @@ import java.util.*;
  * create Client
  * */
 @Entity
-@Table(name = "clientTable")
+@Table(appliesTo = "client")
 public class Client implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -59,8 +60,6 @@ public class Client implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Account> accounts;
 
     public Client() {
     }
@@ -73,26 +72,13 @@ public class Client implements Serializable {
         this.addressee= addressee;
         this.password = password;
 
-        this.accounts = new ArrayList<>();
     }
 
     public void addAccount(Account account) {
         account.setClient(this);
         account.setClient_id(this.id);
-        accounts.add(account);
     }
 
-    public void removeAccount(Account account) {
-        accounts.remove(account);
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
     public String getAddressee() {
         return addressee;
     }
@@ -159,8 +145,6 @@ public class Client implements Serializable {
                 ", eMail='" + eMail + '\'' +
                 ", password='" + password + '\'' +
                 ", addressee='" + addressee + '\'' +
-                ", roles=" + roles +
-                ", accounts=" + accounts +
                 '}';
     }
 }

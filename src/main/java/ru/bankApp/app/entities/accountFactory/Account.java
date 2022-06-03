@@ -1,12 +1,13 @@
 package ru.bankApp.app.entities.accountFactory;
 
+import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.bankApp.app.entities.Product;
 import ru.bankApp.app.entities.Client;
 import ru.bankApp.app.entities.creditFactory.Credit;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  * create Account implements interface  {@link Product#create( Client, int, String, String)} , this entities Account object
  * */
 @Entity
-@Table (name = "account_table")
+@Table(appliesTo = "account_table")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -79,7 +80,7 @@ public  class  Account  implements Product {
     }
 
     @Override
-    public boolean setMoney(double money) {
+    public boolean pluseMoney(double money) {
         double balance;
         balance = this.getMoney_in_account() + money;
         this.setMoney_in_account(balance);
@@ -87,7 +88,7 @@ public  class  Account  implements Product {
     }
 
     @Override
-    public boolean getMoney(double money) {
+    public boolean minusMoney(double money) {
         if (this.getMoney_in_account()<money){
             return false;
         }else {

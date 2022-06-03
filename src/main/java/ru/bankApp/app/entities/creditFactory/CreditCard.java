@@ -130,7 +130,7 @@ public class CreditCard extends Credit {
     }
 
     @Override
-    public boolean getMoney(double money) {
+    public boolean minusMoney(double money) {
         return false;
     }
 }

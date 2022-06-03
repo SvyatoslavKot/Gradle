@@ -1,14 +1,12 @@
 package ru.bankApp.app.entities;
 
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.Table;
 import java.util.Date;
 
 @Data
@@ -16,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "test")
+@Table(appliesTo = "test")
 public class TestEntity {
     @Id
     @Column(name = "id", nullable = false)

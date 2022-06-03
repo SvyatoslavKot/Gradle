@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-6>">
+<header th:insert="include/header :: header"></header>
+<main class="py-5 text-left">
+    <div>
+        <h3>Registration Page</h3><br>
+    </div>
+    <div>
+        <div th:object="message" th:if="massage">
+            massage
+        </div>
+
+        <form action="/registration" method="POST" th:odject="${client}">
+            <label  for="name">Name:</label><br/>
+            <input class="m-2" type="text" th:field="*{client.userName}" id="name"/>
+            <div th:if="${#fields.hasErrors('client.userName')}" th:error="*{client.userName}">name error</div><br/>
+
+            <label for="lastName">Last Name: </label><br/>
+            <input class="m-2" type="text" th:field="*{client.lastName}" id="lastName"/>
+            <div th:if="${#fields.hasErrors('client.lastName')}"  th:error="*{client.lastName}">lastName error</div><br/>
+
+
+            <label for="mobilePhone">Phone :</label><br/>
+            <input class="m-2" type="text" th:field="*{client.mobilePhone}" id="mobilePhone"/>
+            <div th:if="${#fields.hasErrors('client.mobilePhone')}" th:error="*{client.mobilePhone}">mobilePhone error</div><br/>
+
+            <label for="addressee">Addressee:</label><br/>
+            <input class="m-2" type="text" th:field="*{client.addressee}" id="addressee"/>
+            <div th:if="${#fields.hasErrors('client.addressee')}" th:error="*{client.addressee}">nickName error</div><br/>
+
+            <label for="eMail">@mail:</label><br/>
+            <input class="m-2" type="text" th:field="*{client.eMail}" id="eMail"/>
+            <div th:if="${#fields.hasErrors('client.eMail')}" th:error="*{client.eMail}">eMail error</div><br/>
+
+            <label>Password: </label><br/>
+            <input class="m-2" type="text" th:field="*{client.password}" id="password"/>
+            <div th:if="${#fields.hasErrors('client.password')}" th:error="*{client.password}">password error</div><br/>
+            <input class="m-2" type="text" name="password2"/><br/>
+
+            <button name="enter" type="submit">Register</button>
+        </form>
+        <button onclick="location.href='/bank_app/'">Cancel</button>
+    </div>
+</main>
+<footer th:insert="include/footer :: footer"></footer>
+</body>
+</html>

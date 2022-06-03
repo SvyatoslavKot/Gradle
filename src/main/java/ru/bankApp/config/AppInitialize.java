@@ -3,13 +3,14 @@ package ru.bankApp.config;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 public class AppInitialize extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return new Class[]{};
     }
 
     @Override

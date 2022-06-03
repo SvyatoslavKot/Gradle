@@ -7,17 +7,23 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.bankApp.app.entities.accountFactory.Account;
 
+
 import java.util.Date;
 import java.util.List;
 
 @Component
 public class AccountDao {
-    private final JdbcTemplate jdbcTemplate;
+
+
+    private  JdbcTemplate jdbcTemplate;
    private Date date = new Date();
 
     @Autowired
     public AccountDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public AccountDao() {
     }
 
     public List<Account> allAccount(){

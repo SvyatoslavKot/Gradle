@@ -1,5 +1,6 @@
 package ru.bankApp.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,16 +8,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.bankApp.app.bankApp.exeption.ClientAddExeption;
 import ru.bankApp.app.entities.Client;
+import ru.bankApp.app.entities.Employee;
 import ru.bankApp.service.ClientService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/bank_app/profile/")
+@RequestMapping("/bank_app/client/")
 public class ProfileController {
     ClientService clientService;
     @Autowired
@@ -25,13 +26,14 @@ public class ProfileController {
     }
 
 
-    @PostMapping("/{id}")
+    @PostMapping("/profile/{id}")
     public String exitProfile(@PathVariable("id") int id, HttpServletRequest req, HttpServletResponse resp){
         Cookie[]cookies = req.getCookies();
         for (Cookie c:cookies){
             if (c.getName().equals("client")){
                 c.setMaxAge(0);
                 resp.addCookie(c);
+                req.getSession().removeAttribute("client");
                 return "redirect:/bank_app/";
             }
         }
@@ -62,33 +64,34 @@ public class ProfileController {
             }
             client.setId(clientService.getByPhone(client.getMobilePhone()).getId());
             session.setAttribute("client", client);
-            return "redirect:/bank_app/profile/"+clientService.getByPhone(client.getMobilePhone()).getId();
+            return "redirect:/bank_app/client/profile/"+clientService.getByPhone(client.getMobilePhone()).getId();
         }
     }
 
-    @GetMapping("/{id}")
-    public String profileView(HttpServletResponse resp,@PathVariable("id") int id, Model model){
-        Cookie clientCook = new Cookie("client", String.valueOf(id));
-        clientCook.setMaxAge(24*60*30);
-        resp.addCookie(clientCook);
-        model.addAttribute("client", clientService.getById(id));
+    @GetMapping("/profile/{id}")
+    public String profileView(HttpServletResponse resp,@PathVariable("id") int id, Model model,
+    HttpSession session){
+        Client client = clientService.getById(id);
+        model.addAttribute("user", client);
+        model.addAttribute("client", session.getAttribute("client"));
+        model.addAttribute("employee",session.getAttribute("employee"));
         return "profileViews/profile";
     }
-    @GetMapping("/{id}/edit")
+    @GetMapping("/profile/{id}/edit")
     public String editProfile(Model model, @PathVariable("id") int id){
         model.addAttribute("client",clientService.getById(id));
         return "profileViews/profileEdit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/profile/{id}")
     public String upDate(
             @ModelAttribute("client") @Valid Client client,BindingResult bindingResult,
             @PathVariable("id") int id){
             clientService.upDate( client);
-            return "redirect:/bank_app/profile/"+client.getId();
+            return "redirect:/bank_app/client/profile/"+client.getId();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/profile/{id}")
     public String deleteProfile(@PathVariable("id") int id){
         clientService.delete(id);
         return "redirect:/bank_app/";

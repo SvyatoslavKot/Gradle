@@ -1,57 +1,28 @@
 package ru.bankApp.app.entities;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "role")
-public class Role implements GrantedAuthority {
-    @Id
-    private Long id;
-    private String name;
-    @Transient
-    @ManyToMany(mappedBy = "roles")
-    private Set<Client> client;
-    public Role() {
+public enum Role {
+    USER(Set.of(Permission.USER_READ)),
+    ADMIN(Set.of(Permission.USER_READ,Permission.USER_WRITE)),
+    EMPLOYEE(Set.of(Permission.USER_READ,Permission.USER_WRITE));
+
+    private final Set<Permission> permissions;
+
+    Role(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
-    public Role(Long id) {
-        this.id = id;
+    public Set<Permission> getPermissions() {
+        return permissions;
     }
 
-    public Role(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Client> getClient() {
-        return client;
-    }
-
-    public void setUsers(Set<Client> client) {
-        this.client = client;
-    }
-
-    @Override
-    public String getAuthority() {
-        return getName();
+    public Set<SimpleGrantedAuthority> getAuthorities(){
+        return getPermissions().stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toSet());
     }
 }
